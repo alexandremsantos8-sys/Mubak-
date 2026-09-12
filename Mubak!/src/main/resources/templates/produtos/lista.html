@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Produtos | Mubak</title>
+    <link rel="stylesheet" th:href="@{/css/produtos.css}">
+</head>
+<body>
+<main class="page-shell">
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">MUBAK / CATÁLOGO</p>
+            <h1>Produtos</h1>
+            <p class="intro">Consulte o catálogo e acompanhe o estoque disponível.</p>
+        </div>
+        <a class="button button-primary" th:href="@{/produtos/novo}">Novo produto</a>
+    </header>
+
+    <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
+
+    <form class="search-bar" th:action="@{/produtos}" method="get">
+        <label class="sr-only" for="busca">Buscar produto ou categoria</label>
+        <input id="busca" name="busca" type="search" th:value="${busca}" placeholder="Buscar por produto ou categoria">
+        <button class="button button-dark" type="submit">Buscar</button>
+    </form>
+
+    <section class="product-grid" th:if="${!#lists.isEmpty(produtos)}">
+        <article class="product-card" th:each="produto : ${produtos}">
+            <img class="product-image" th:src="${produto.imagemUrl}" th:alt="${produto.nome}">
+            <div class="product-content">
+                <p class="product-category" th:text="${produto.categoria}"></p>
+                <h2 th:text="${produto.nome}"></h2>
+                <p class="product-seller">Vendido por <strong th:text="${produto.vendedor}"></strong></p>
+                <div class="product-footer">
+                    <strong class="product-price" th:text="${'R$ ' + #numbers.formatDecimal(produto.preco, 1, 2)}"></strong>
+                    <span class="stock" th:classappend="${produto.estoque == 0} ? ' out-of-stock' : ''"
+                          th:text="${produto.estoque == 0 ? 'Sem estoque' : produto.estoque + ' em estoque'}"></span>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <div class="empty-state" th:if="${#lists.isEmpty(produtos)}">
+        <h2>Nenhum produto encontrado</h2>
+        <p>Cadastre o primeiro item ou tente outra busca.</p>
+    </div>
+</main>
+</body>
+</html>

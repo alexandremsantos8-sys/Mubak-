@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Novo produto | Mubak</title>
+    <link rel="stylesheet" th:href="@{/css/produtos.css}">
+</head>
+<body>
+<main class="page-shell">
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">MUBAK / CATÁLOGO</p>
+            <h1>Cadastrar produto</h1>
+            <p class="intro">Adicione um item ao catálogo com preço, estoque e imagem.</p>
+        </div>
+        <a class="button button-secondary" th:href="@{/produtos}">Ver produtos</a>
+    </header>
+
+    <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+
+    <form class="product-form" th:action="@{/produtos}" th:object="${produto}" method="post">
+        <section class="form-section">
+            <h2>Informações do produto</h2>
+            <div class="field full-width">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" th:field="*{nome}" maxlength="120" required>
+            </div>
+            <div class="field full-width">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" th:field="*{descricao}" maxlength="2000" rows="5" required></textarea>
+            </div>
+            <div class="field">
+                <label for="categoria">Categoria</label>
+                <input id="categoria" type="text" th:field="*{categoria}" maxlength="80" required>
+            </div>
+            <div class="field">
+                <label for="vendedor">Vendedor</label>
+                <input id="vendedor" type="text" th:field="*{vendedor}" maxlength="120" required>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h2>Comercial</h2>
+            <div class="field">
+                <label for="preco">Preço (R$)</label>
+                <input id="preco" type="number" th:field="*{preco}" min="0.01" step="0.01" required>
+            </div>
+            <div class="field">
+                <label for="estoque">Estoque disponível</label>
+                <input id="estoque" type="number" th:field="*{estoque}" min="0" step="1" required>
+            </div>
+            <div class="field full-width">
+                <label for="imagemUrl">URL da imagem</label>
+                <input id="imagemUrl" type="url" th:field="*{imagemUrl}" maxlength="500" placeholder="https://..." required>
+            </div>
+        </section>
+
+        <div class="form-actions">
+            <a class="button button-secondary" th:href="@{/produtos}">Cancelar</a>
+            <button class="button button-primary" type="submit">Cadastrar produto</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>
