@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Novo produto | Mubak</title>
+    <title th:text="${produto.id == null ? 'Novo produto | Mubak' : 'Editar produto | Mubak'}">Produto | Mubak</title>
     <link rel="stylesheet" th:href="@{/css/produtos.css}">
 </head>
 <body>
@@ -11,15 +11,19 @@
     <header class="page-header">
         <div>
             <p class="eyebrow">MUBAK / CATÁLOGO</p>
-            <h1>Cadastrar produto</h1>
-            <p class="intro">Adicione um item ao catálogo com preço, estoque e imagem.</p>
+            <h1 th:text="${produto.id == null ? 'Cadastrar produto' : 'Editar produto'}">Cadastrar produto</h1>
+            <p class="intro" th:text="${produto.id == null ? 'Adicione um item ao catálogo com preço, estoque e imagem.' : 'Atualize os dados do produto no catálogo.'}">Adicione um item ao catálogo com preço, estoque e imagem.</p>
         </div>
         <a class="button button-secondary" th:href="@{/produtos}">Ver produtos</a>
     </header>
 
     <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
 
+<<<<<<< HEAD
     <form class="product-form" th:action="@{/produtos}" th:object="${produto}" method="post" enctype="multipart/form-data">
+=======
+    <form class="product-form" th:action="${produto.id == null ? '/produtos' : '/produtos/' + produto.id}" th:object="${produto}" method="post">
+>>>>>>> dde1454008ef259cd4dd14280c3ec8c0fb8eb6cb
         <section class="form-section">
             <h2>Informações do produto</h2>
             <div class="field full-width">
@@ -59,7 +63,7 @@
 
         <div class="form-actions">
             <a class="button button-secondary" th:href="@{/produtos}">Cancelar</a>
-            <button class="button button-primary" type="submit">Cadastrar produto</button>
+            <button class="button button-primary" type="submit" th:text="${produto.id == null ? 'Cadastrar produto' : 'Salvar alterações'}">Cadastrar produto</button>
         </div>
     </form>
 </main>
