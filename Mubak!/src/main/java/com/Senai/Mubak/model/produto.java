@@ -41,7 +41,6 @@ public class produto {
     @Column(nullable = false)
     private Integer estoque;
 
-    @NotBlank(message = "Informe a URL da imagem.")
     @Size(max = 500, message = "A URL deve ter no máximo 500 caracteres.")
     @Column(nullable = false, length = 500)
     private String imagemUrl;

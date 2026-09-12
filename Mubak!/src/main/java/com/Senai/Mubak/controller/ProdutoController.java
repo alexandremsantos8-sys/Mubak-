@@ -1,8 +1,5 @@
 package com.Senai.Mubak.controller;
 
-import com.Senai.Mubak.model.produto;
-import com.Senai.Mubak.service.ImagemService;
-import com.Senai.Mubak.service.ProdutoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Senai.Mubak.model.produto;
+import com.Senai.Mubak.service.ImagemService;
 import com.Senai.Mubak.service.ProdutoService;
 
 import jakarta.validation.Valid;
@@ -51,6 +49,7 @@ public class ProdutoController {
 
     @PostMapping
     public String salvar(@Valid @ModelAttribute produto produto, BindingResult bindingResult,
+                         @RequestParam("imagem") MultipartFile imagem,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "produtos/form";
@@ -80,6 +79,7 @@ public class ProdutoController {
     @PostMapping("/{id}")
     public String atualizar(@PathVariable Long id, @Valid @ModelAttribute produto produto,
                             BindingResult bindingResult,
+                            @RequestParam("imagem") MultipartFile imagem,
                             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "produtos/form";
