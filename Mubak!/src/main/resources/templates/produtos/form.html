@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${produto.id == null ? 'Novo produto | Mubak' : 'Editar produto | Mubak'}">Produto | Mubak</title>
-    <link rel="stylesheet" th:href="@{/css/produtos.css}">
+    <link rel="stylesheet" th:href="@{/css/produtos.css(v=4)}">
 </head>
 <body>
 <main class="page-shell">
@@ -25,18 +25,22 @@
             <div class="field full-width">
                 <label for="nome">Nome</label>
                 <input id="nome" type="text" th:field="*{nome}" maxlength="120" required>
+                <small class="field-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></small>
             </div>
             <div class="field full-width">
                 <label for="descricao">Descrição</label>
                 <textarea id="descricao" th:field="*{descricao}" maxlength="2000" rows="5" required></textarea>
+                <small class="field-error" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></small>
             </div>
             <div class="field">
                 <label for="categoria">Categoria</label>
                 <input id="categoria" type="text" th:field="*{categoria}" maxlength="80" required>
+                <small class="field-error" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
             </div>
             <div class="field">
                 <label for="vendedor">Vendedor</label>
                 <input id="vendedor" type="text" th:field="*{vendedor}" maxlength="120" required>
+                <small class="field-error" th:if="${#fields.hasErrors('vendedor')}" th:errors="*{vendedor}"></small>
             </div>
         </section>
 
@@ -45,14 +49,17 @@
             <div class="field">
                 <label for="preco">Preço (R$)</label>
                 <input id="preco" type="number" th:field="*{preco}" min="0.01" step="0.01" required>
+                <small class="field-error" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></small>
             </div>
             <div class="field">
                 <label for="estoque">Estoque disponível</label>
                 <input id="estoque" type="number" th:field="*{estoque}" min="0" step="1" required>
+                <small class="field-error" th:if="${#fields.hasErrors('estoque')}" th:errors="*{estoque}"></small>
             </div>
             <div class="field full-width">
                 <label for="imagemUrl">URL da imagem</label>
                 <input id="imagemUrl" type="url" th:field="*{imagemUrl}" maxlength="500" placeholder="https://..." required>
+                <small class="field-error" th:if="${#fields.hasErrors('imagemUrl')}" th:errors="*{imagemUrl}"></small>
             </div>
         </section>
 

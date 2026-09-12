@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title">
+  <title id="title">Imagem de produto indisponível</title>
+  <rect width="800" height="600" fill="#e7ece6"/>
+  <rect x="260" y="170" width="280" height="220" rx="12" fill="#cbd8cc"/>
+  <circle cx="350" cy="250" r="28" fill="#f5f7f2"/>
+  <path d="M280 360l70-70 55 50 42-38 73 58H280z" fill="#f5f7f2"/>
+</svg>

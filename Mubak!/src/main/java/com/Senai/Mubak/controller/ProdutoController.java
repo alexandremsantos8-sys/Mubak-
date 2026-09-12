@@ -2,6 +2,7 @@ package com.Senai.Mubak.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Senai.Mubak.model.produto;
 import com.Senai.Mubak.service.ProdutoService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/produtos")
@@ -41,7 +44,11 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public String salvar(@ModelAttribute produto produto, RedirectAttributes redirectAttributes) {
+    public String salvar(@Valid @ModelAttribute produto produto, BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "produtos/form";
+        }
         try {
             produtoService.salvar(produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso.");
@@ -53,8 +60,12 @@ public class ProdutoController {
     }
 
     @PostMapping("/{id}")
-    public String atualizar(@PathVariable Long id, @ModelAttribute produto produto,
+    public String atualizar(@PathVariable Long id, @Valid @ModelAttribute produto produto,
+                            BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "produtos/form";
+        }
         try {
             produtoService.atualizar(id, produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto atualizado com sucesso.");

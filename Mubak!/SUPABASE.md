@@ -1,6 +1,6 @@
 # Configuração do Supabase
 
-O projeto usa PostgreSQL quando as variáveis de ambiente do Supabase estão configuradas. Sem elas, continua usando H2 em memória para desenvolvimento local e testes.
+O projeto usa PostgreSQL do Supabase. As variáveis de ambiente são obrigatórias para iniciar a aplicação.
 
 No painel do Supabase, abra **Connect** e copie a conexão PostgreSQL. Prefira a conexão via pooler para a aplicação:
 
@@ -14,4 +14,3 @@ $env:JPA_DDL_AUTO = "update"
 
 Substitua `HOST`, `SEU_PROJECT_REF` e `SUA_SENHA` pelos dados exibidos no painel. Não committe a senha nem coloque essas variáveis diretamente em arquivos versionados.
 
-Para voltar ao H2, feche o terminal ou remova as variáveis de ambiente e execute novamente a aplicação.
