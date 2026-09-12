@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${produto.nome + ' | Mubak!'}">Produto | Mubak!</title>
+    <link rel="stylesheet" th:href="@{/css/produtos.css}">
+</head>
+<body>
+<main class="page-shell">
+    <header class="detail-header">
+        <a class="brand" th:href="@{/produtos}">Mubak!</a>
+        <a class="button button-secondary" th:href="@{/produtos}">Voltar ao catálogo</a>
+    </header>
+    <article class="detail-layout">
+        <img class="detail-image" th:src="${produto.imagemUrl}" th:alt="${produto.nome}">
+        <div class="detail-content">
+            <p class="product-category" th:text="${produto.categoria}"></p>
+            <h1 th:text="${produto.nome}"></h1>
+            <p class="detail-price" th:text="${'R$ ' + #numbers.formatDecimal(produto.preco, 1, 2)}"></p>
+            <p class="detail-description" th:text="${produto.descricao}"></p>
+            <dl class="detail-data">
+                <div><dt>Vendedor</dt><dd th:text="${produto.vendedor}"></dd></div>
+                <div><dt>Estoque</dt><dd th:text="${produto.estoque == 0 ? 'Sem estoque' : produto.estoque + ' unidades disponíveis'}"></dd></div>
+            </dl>
+        </div>
+    </article>
+</main>
+</body>
+</html>

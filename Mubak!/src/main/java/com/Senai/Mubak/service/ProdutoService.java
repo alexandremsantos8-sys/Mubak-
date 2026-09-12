@@ -42,7 +42,9 @@ public class ProdutoService {
     }
 
     public void excluir(Long id) {
-        produtoRepository.delete(buscarPorId(id));
+        produto produto = buscarPorId(id);
+        produtoRepository.delete(produto);
+        produtoRepository.flush();
     }
 
     public List<produto> listar(String busca) {
@@ -66,7 +68,7 @@ public class ProdutoService {
             throw new IllegalArgumentException("O estoque não pode ser negativo.");
         }
         if (!StringUtils.hasText(produto.getImagemUrl())) {
-            throw new IllegalArgumentException("Informe a URL da imagem.");
+            throw new IllegalArgumentException("Selecione uma imagem para o produto.");
         }
         if (!StringUtils.hasText(produto.getCategoria())) {
             throw new IllegalArgumentException("Informe a categoria.");

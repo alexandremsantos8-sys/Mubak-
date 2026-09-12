@@ -19,7 +19,9 @@
 
     <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
 
-    <form class="product-form" th:action="${produto.id == null ? '/produtos' : '/produtos/' + produto.id}" th:object="${produto}" method="post">
+    <form class="product-form"
+          th:action="${produto.id == null ? '/produtos' : '/produtos/' + produto.id}"
+          th:object="${produto}" method="post" enctype="multipart/form-data">
         <section class="form-section">
             <h2>Informações do produto</h2>
             <div class="field full-width">
@@ -57,9 +59,15 @@
                 <small class="field-error" th:if="${#fields.hasErrors('estoque')}" th:errors="*{estoque}"></small>
             </div>
             <div class="field full-width">
+<<<<<<< HEAD
                 <label for="imagemUrl">URL da imagem</label>
                 <input id="imagemUrl" type="url" th:field="*{imagemUrl}" maxlength="500" placeholder="https://..." required>
                 <small class="field-error" th:if="${#fields.hasErrors('imagemUrl')}" th:errors="*{imagemUrl}"></small>
+=======
+                <label for="imagem">Imagem do produto</label>
+                <input id="imagem" name="imagem" type="file" accept="image/jpeg,image/png,image/webp,image/gif" th:required="${produto.id == null}">
+                <small class="field-help" th:text="${produto.id == null ? 'Formatos aceitos: JPG, PNG, WEBP ou GIF.' : 'Deixe vazio para manter a imagem atual.'}">Formatos aceitos: JPG, PNG, WEBP ou GIF.</small>
+>>>>>>> 210cbc53b04ead05a25404857afcd0102b501e07
             </div>
         </section>
 

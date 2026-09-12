@@ -8,9 +8,10 @@
 </head>
 <body>
 <main class="page-shell">
-    <header class="page-header">
+    <header class="page-header search-header">
         <div>
-            <p class="eyebrow">MUBAK / CATÁLOGO</p>
+            <a class="brand" th:href="@{/produtos}">Mubak!</a>
+            <p class="eyebrow">CATÁLOGO</p>
             <h1>Produtos</h1>
             <p class="intro">Consulte o catálogo e acompanhe o estoque disponível.</p>
         </div>
@@ -28,7 +29,13 @@
 
     <section class="product-grid" th:if="${!#lists.isEmpty(produtos)}">
         <article class="product-card" th:each="produto : ${produtos}">
+<<<<<<< HEAD
             <img class="product-image" th:src="${produto.imagemUrl}" th:alt="${produto.nome}" onerror="this.onerror=null;this.src='/images/produto-placeholder.svg';">
+=======
+            <a class="product-image-link" th:href="@{/produtos/{id}(id=${produto.id})}">
+                <img class="product-image" th:src="${produto.imagemUrl}" th:alt="${produto.nome}">
+            </a>
+>>>>>>> 210cbc53b04ead05a25404857afcd0102b501e07
             <div class="product-content">
                 <p class="product-category" th:text="${produto.categoria}"></p>
                 <h2 th:text="${produto.nome}"></h2>
