@@ -1,12 +1,13 @@
 package com.Senai.Mubak.service;
 
-import com.Senai.Mubak.model.produto;
-import com.Senai.Mubak.repository.ProdutoRepository;
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
-import java.util.List;
+import com.Senai.Mubak.model.produto;
+import com.Senai.Mubak.repository.ProdutoRepository;
 
 @Service
 public class ProdutoService {
@@ -20,6 +21,28 @@ public class ProdutoService {
     public produto salvar(produto produto) {
         validar(produto);
         return produtoRepository.save(produto);
+    }
+
+    public produto buscarPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
+    }
+
+    public produto atualizar(Long id, produto dados) {
+        validar(dados);
+        produto produto = buscarPorId(id);
+        produto.setNome(dados.getNome());
+        produto.setDescricao(dados.getDescricao());
+        produto.setPreco(dados.getPreco());
+        produto.setEstoque(dados.getEstoque());
+        produto.setImagemUrl(dados.getImagemUrl());
+        produto.setCategoria(dados.getCategoria());
+        produto.setVendedor(dados.getVendedor());
+        return produtoRepository.save(produto);
+    }
+
+    public void excluir(Long id) {
+        produtoRepository.delete(buscarPorId(id));
     }
 
     public List<produto> listar(String busca) {

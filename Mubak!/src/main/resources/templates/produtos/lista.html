@@ -37,6 +37,12 @@
                     <span class="stock" th:classappend="${produto.estoque == 0} ? ' out-of-stock' : ''"
                           th:text="${produto.estoque == 0 ? 'Sem estoque' : produto.estoque + ' em estoque'}"></span>
                 </div>
+                <div class="product-actions">
+                    <a class="button button-secondary" th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a>
+                    <form th:action="@{/produtos/{id}/excluir(id=${produto.id})}" method="post">
+                        <button class="button button-danger" type="submit" onclick="return confirm('Excluir este produto?');">Excluir</button>
+                    </form>
+                </div>
             </div>
         </article>
     </section>
