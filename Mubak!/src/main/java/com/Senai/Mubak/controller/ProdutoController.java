@@ -1,14 +1,17 @@
 package com.Senai.Mubak.controller;
 
 import com.Senai.Mubak.model.produto;
+import com.Senai.Mubak.service.ImagemService;
 import com.Senai.Mubak.service.ProdutoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -16,9 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProdutoController {
 
     private final ProdutoService produtoService;
+    private final ImagemService imagemService;
 
-    public ProdutoController(ProdutoService produtoService) {
+    public ProdutoController(ProdutoService produtoService, ImagemService imagemService) {
         this.produtoService = produtoService;
+        this.imagemService = imagemService;
     }
 
     @GetMapping("/novo")
@@ -28,8 +33,11 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public String salvar(@ModelAttribute produto produto, RedirectAttributes redirectAttributes) {
+    public String salvar(@ModelAttribute produto produto,
+                         @RequestParam(value = "imagem", required = false) MultipartFile imagem,
+                         RedirectAttributes redirectAttributes) {
         try {
+            produto.setImagemUrl(imagemService.salvar(imagem));
             produtoService.salvar(produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso.");
             return "redirect:/produtos";
@@ -37,6 +45,19 @@ public class ProdutoController {
             redirectAttributes.addFlashAttribute("erro", exception.getMessage());
             return "redirect:/produtos/novo";
         }
+    }
+
+    @GetMapping("/{id}")
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return produtoService.buscarPorId(id)
+                .map(produto -> {
+                    model.addAttribute("produto", produto);
+                    return "produtos/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Produto não encontrado.");
+                    return "redirect:/produtos";
+                });
     }
 
     @GetMapping

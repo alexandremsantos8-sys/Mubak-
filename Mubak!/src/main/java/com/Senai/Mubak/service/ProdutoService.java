@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -29,6 +30,10 @@ public class ProdutoService {
         return produtoRepository.findByNomeContainingIgnoreCaseOrCategoriaContainingIgnoreCase(busca, busca);
     }
 
+    public Optional<produto> buscarPorId(Long id) {
+        return produtoRepository.findById(id);
+    }
+
     private void validar(produto produto) {
         if (!StringUtils.hasText(produto.getNome())) {
             throw new IllegalArgumentException("Informe o nome do produto.");
@@ -43,7 +48,7 @@ public class ProdutoService {
             throw new IllegalArgumentException("O estoque não pode ser negativo.");
         }
         if (!StringUtils.hasText(produto.getImagemUrl())) {
-            throw new IllegalArgumentException("Informe a URL da imagem.");
+            throw new IllegalArgumentException("Selecione uma imagem para o produto.");
         }
         if (!StringUtils.hasText(produto.getCategoria())) {
             throw new IllegalArgumentException("Informe a categoria.");
