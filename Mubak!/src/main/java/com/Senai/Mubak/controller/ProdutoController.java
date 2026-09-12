@@ -1,11 +1,8 @@
 package com.Senai.Mubak.controller;
 
-<<<<<<< HEAD
 import com.Senai.Mubak.model.produto;
 import com.Senai.Mubak.service.ImagemService;
 import com.Senai.Mubak.service.ProdutoService;
-=======
->>>>>>> dde1454008ef259cd4dd14280c3ec8c0fb8eb6cb
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.Senai.Mubak.model.produto;
-import com.Senai.Mubak.service.ProdutoService;
 
 @Controller
 @RequestMapping("/produtos")
@@ -64,23 +58,28 @@ public class ProdutoController {
         }
     }
 
-<<<<<<< HEAD
     @GetMapping("/{id}")
     public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
-        return produtoService.buscarPorId(id)
-                .map(produto -> {
-                    model.addAttribute("produto", produto);
-                    return "produtos/detalhes";
-                })
-                .orElseGet(() -> {
-                    redirectAttributes.addFlashAttribute("erro", "Produto não encontrado.");
-                    return "redirect:/produtos";
-                });
-=======
+        try {
+            model.addAttribute("produto", produtoService.buscarPorId(id));
+            return "produtos/detalhes";
+        } catch (IllegalArgumentException exception) {
+            redirectAttributes.addFlashAttribute("erro", exception.getMessage());
+            return "redirect:/produtos";
+        }
+    }
+
     @PostMapping("/{id}")
     public String atualizar(@PathVariable Long id, @ModelAttribute produto produto,
+                            @RequestParam(value = "imagem", required = false) MultipartFile imagem,
                             RedirectAttributes redirectAttributes) {
         try {
+            produto produtoAtual = produtoService.buscarPorId(id);
+            if (imagem != null && !imagem.isEmpty()) {
+                produto.setImagemUrl(imagemService.salvar(imagem));
+            } else {
+                produto.setImagemUrl(produtoAtual.getImagemUrl());
+            }
             produtoService.atualizar(id, produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto atualizado com sucesso.");
         } catch (IllegalArgumentException exception) {
@@ -99,7 +98,6 @@ public class ProdutoController {
             redirectAttributes.addFlashAttribute("erro", exception.getMessage());
         }
         return "redirect:/produtos";
->>>>>>> dde1454008ef259cd4dd14280c3ec8c0fb8eb6cb
     }
 
     @GetMapping

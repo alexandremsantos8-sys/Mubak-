@@ -2,7 +2,6 @@ package com.Senai.Mubak.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -43,7 +42,9 @@ public class ProdutoService {
     }
 
     public void excluir(Long id) {
-        produtoRepository.delete(buscarPorId(id));
+        produto produto = buscarPorId(id);
+        produtoRepository.delete(produto);
+        produtoRepository.flush();
     }
 
     public List<produto> listar(String busca) {
@@ -51,10 +52,6 @@ public class ProdutoService {
             return produtoRepository.findAll();
         }
         return produtoRepository.findByNomeContainingIgnoreCaseOrCategoriaContainingIgnoreCase(busca, busca);
-    }
-
-    public Optional<produto> buscarPorId(Long id) {
-        return produtoRepository.findById(id);
     }
 
     private void validar(produto produto) {
