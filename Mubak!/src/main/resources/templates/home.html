@@ -14,8 +14,8 @@
 <main class="home-shell">
     <nav class="site-nav home-nav" aria-label="Navegação principal">
         <a class="brand-mark" th:href="@{/}">MUBAK<span>.</span></a>
-        <div class="nav-links"><a th:href="@{/produtos}">Catálogo</a><a th:href="@{/produtos/novo}">Vender</a></div>
-        <a class="nav-action" th:href="@{/produtos}" aria-label="Abrir catálogo">Buscar</a>
+        <div class="nav-links"><a th:href="@{/login}">Login</a><a th:href="@{/login}">Vender</a></div>
+        <a class="nav-action" th:href="@{/login}" aria-label="Entrar">Entrar</a>
         <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
     </nav>
 
@@ -25,8 +25,8 @@
             <h1 id="hero-title">Escolhas que fazem sentido.</h1>
             <p class="hero-intro">Descubra produtos de vendedores independentes em um catálogo feito para encontrar, comparar e escolher com calma.</p>
             <div class="hero-actions">
-                <a class="button button-primary" th:href="@{/produtos}">Explorar catálogo</a>
-                <a class="text-link" th:href="@{/produtos/novo}">Cadastrar produto <span aria-hidden="true">&#8594;</span></a>
+                <a class="button button-primary button-login-hero" th:href="@{/login}">Entrar para explorar</a>
+                <a class="text-link" th:href="@{/login}">Cadastrar produto <span aria-hidden="true">&#8594;</span></a>
             </div>
         </div>
         <div class="hero-visual" aria-label="Vitrine 3D com produtos do marketplace Mubak">
@@ -44,7 +44,7 @@
             <h2 id="discover-title">Tudo começa com uma boa descoberta.</h2>
             <div>
                 <p>Pesquise por nome ou categoria e encontre o que procura sem distrações. O catálogo mantém o essencial à vista: imagem, preço, vendedor e disponibilidade.</p>
-                <a class="text-link" th:href="@{/produtos}">Ver todos os produtos <span aria-hidden="true">&#8594;</span></a>
+                <a class="text-link" th:href="@{/login}">Ver todos os produtos <span aria-hidden="true">&#8594;</span></a>
                 <div class="home-feature-line">
                     <div><strong>Encontre</strong><span>Uma busca direta para chegar ao produto certo.</span></div>
                     <div><strong>Compare</strong><span>Informações claras para decidir no seu ritmo.</span></div>
@@ -58,13 +58,13 @@
             <h2 id="seller-title">Seu produto merece espaço.</h2>
             <div>
                 <p>Cadastre itens, atualize estoque e mantenha sua vitrine organizada. Uma experiência simples para quem vende e para quem compra.</p>
-                <a class="text-link" th:href="@{/produtos/novo}">Cadastrar um produto <span aria-hidden="true">&#8594;</span></a>
+                <a class="text-link" th:href="@{/login}">Cadastrar um produto <span aria-hidden="true">&#8594;</span></a>
             </div>
         </div>
     </section>
     <section class="home-cta" aria-labelledby="cta-title">
         <h2 id="cta-title">Veja o que está esperando por você.</h2>
-        <a class="button button-primary" th:href="@{/produtos}">Abrir catálogo</a>
+        <a class="button button-primary button-login-cta" th:href="@{/login}">Fazer login e abrir catálogo</a>
     </section>
     <footer class="home-footer"><div class="home-footer-inner"><span>MUBAK.</span><span>Um catálogo para escolhas melhores.</span><span>&copy; 2026 Mubak</span></div></footer>
 </main>

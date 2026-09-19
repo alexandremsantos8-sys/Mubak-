@@ -1,0 +1,1 @@
+package com.Senai.Mubak.repository; import java.util.*; import org.springframework.data.jpa.repository.JpaRepository; import com.Senai.Mubak.model.Usuario; public interface UsuarioRepository extends JpaRepository<Usuario,Long>{Optional<Usuario> findByEmailIgnoreCase(String e); Optional<Usuario> findByDocumento(String d);}
