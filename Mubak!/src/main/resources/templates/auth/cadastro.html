@@ -1,1 +1,19 @@
-<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Criar conta | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}"></head><body><main class="page-shell"><div class="content-wrap"><h1>Criar conta.</h1><div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div><form class="product-form" th:action="@{/cadastro}" th:object="${usuarioForm}" method="post"><section class="form-section"><label>Nome/Razão Social</label><input th:field="*{nome}" required><label>CPF/CNPJ</label><input th:field="*{documento}" placeholder="XXX.XXX.XXX-XX ou XX.XXX.XXX/0001-XX" maxlength="18" required><label>Data de nascimento do titular</label><input th:field="*{dataNascimento}" placeholder="DD/MM/AAAA" maxlength="10" required><label>E-mail</label><input type="email" th:field="*{email}" placeholder="test@mail.com.br" required><label>Confirmação de e-mail</label><input type="email" th:field="*{confirmacaoEmail}" required><label>Senha</label><input type="password" th:field="*{senha}" required><label>Confirmação de senha</label><input type="password" th:field="*{confirmacaoSenha}" required></section><div class="form-actions"><button class="button button-primary">Criar conta</button><a class="button button-secondary" th:href="@{/login}">Login</a></div></form></div></main></body></html>
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Criar conta | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}"></head>
+<body><main class="page-shell"><div class="content-wrap"><h1>Criar conta.</h1><div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+<form class="product-form" th:action="@{/cadastro}" th:object="${usuarioForm}" method="post"><section class="form-section">
+<label for="nome">Nome/Razão Social</label><input id="nome" th:field="*{nome}" required>
+<label for="documento">CPF/CNPJ</label><input id="documento" type="text" th:field="*{documento}" placeholder="XXX.XXX.XXX-XX ou XX.XXX.XXX/0001-XX" maxlength="18" inputmode="numeric" required>
+<label for="dataNascimento">Data de nascimento do titular</label><input id="dataNascimento" type="text" th:field="*{dataNascimento}" placeholder="DD/MM/AAAA" maxlength="10" inputmode="numeric" required>
+<label for="email">E-mail</label><input id="email" type="email" th:field="*{email}" placeholder="test@mail.com.br" required>
+<label for="confirmacaoEmail">Confirmação de e-mail</label><input id="confirmacaoEmail" type="email" th:field="*{confirmacaoEmail}" required>
+<label for="senha">Senha</label><input id="senha" type="password" th:field="*{senha}" required>
+<label for="confirmacaoSenha">Confirmação de senha</label><input id="confirmacaoSenha" type="password" th:field="*{confirmacaoSenha}" required>
+</section><div class="form-actions"><button class="button button-primary" type="submit">Criar conta</button><a class="button button-secondary" th:href="@{/login}">Login</a></div></form></div></main>
+<script>
+const documento = document.getElementById('documento');
+const dataNascimento = document.getElementById('dataNascimento');
+documento.addEventListener('input', () => { const valor = documento.value.replace(/\D/g, '').slice(0, 14); documento.value = valor.length > 11 ? valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); });
+dataNascimento.addEventListener('input', () => { const valor = dataNascimento.value.replace(/\D/g, '').slice(0, 8); dataNascimento.value = valor.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'); });
+</script></body></html>
