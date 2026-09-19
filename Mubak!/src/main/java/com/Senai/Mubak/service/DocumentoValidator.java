@@ -1,0 +1,1 @@
+package com.Senai.Mubak.service; public final class DocumentoValidator {private DocumentoValidator(){} public static String digits(String v){return v==null?"":v.replaceAll("\\D","");} public static boolean valido(String v){String d=digits(v); return d.length()==11||d.length()==14;} }
