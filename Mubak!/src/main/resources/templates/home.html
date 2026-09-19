@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mubak | Catálogo</title>
     <link rel="stylesheet" th:href="@{/css/produtos.css(v=4)}">
-    <link rel="stylesheet" th:href="@{/css/home.css(v=1)}">
+    <link rel="stylesheet" th:href="@{/css/home.css(v=3)}">
     <script th:src="@{/js/navigation.js}" defer></script>
+    <script th:src="@{/js/three.min.js}" defer></script>
+    <script th:src="@{/js/marketplace-3d.js(v=3)}" defer></script>
 </head>
 <body>
 <main class="home-shell">
@@ -27,8 +29,12 @@
                 <a class="text-link" th:href="@{/produtos/novo}">Cadastrar produto <span aria-hidden="true">&#8594;</span></a>
             </div>
         </div>
-        <div class="hero-visual">
-            <img src="/images/produto-placeholder.svg" alt="Composição visual abstrata do catálogo Mubak">
+        <div class="hero-visual" aria-label="Vitrine 3D com produtos do marketplace Mubak">
+            <div class="hero-visual-fallback" aria-hidden="true">
+                <img th:src="@{/images/produto-placeholder.svg}" alt="">
+                <span>Vitrine 3D indisponível neste dispositivo</span>
+            </div>
+            <canvas id="marketplace-canvas" class="marketplace-canvas" aria-hidden="true"></canvas>
             <span class="hero-visual-label">Uma nova forma de encontrar</span>
         </div>
     </section>
