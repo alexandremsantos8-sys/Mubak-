@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${produto.id == null ? 'Novo produto | Mubak' : 'Editar produto | Mubak'}">Produto | Mubak</title>
     <link rel="stylesheet" th:href="@{/css/produtos.css(v=4)}">
+    <script th:src="@{/js/navigation.js}" defer></script>
 </head>
 <body>
 <main class="page-shell">
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a class="brand" th:href="@{/}">MUBAK.</a>
+        <div class="nav-links"><a th:href="@{/produtos}">Catálogo</a><a th:href="@{/produtos/novo}">Vender</a></div>
+        <a class="nav-action" th:href="@{/produtos}">Catálogo</a>
+        <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
+    </nav>
+    <div class="content-wrap">
     <header class="page-header">
         <div>
-            <p class="eyebrow">MUBAK / CATÁLOGO</p>
+            <p class="eyebrow">MUBAK / VITRINE</p>
             <h1 th:text="${produto.id == null ? 'Cadastrar produto' : 'Editar produto'}">Cadastrar produto</h1>
             <p class="intro" th:text="${produto.id == null ? 'Adicione um item ao catálogo com preço, estoque e imagem.' : 'Atualize os dados do produto no catálogo.'}">Adicione um item ao catálogo com preço, estoque e imagem.</p>
         </div>
@@ -70,6 +78,7 @@
             <button class="button button-primary" type="submit" th:text="${produto.id == null ? 'Cadastrar produto' : 'Salvar alterações'}">Cadastrar produto</button>
         </div>
     </form>
+    </div>
 </main>
 </body>
 </html>
