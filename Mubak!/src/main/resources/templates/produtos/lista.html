@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Catálogo protegido: recebe a lista e as mensagens do ProdutoController. -->
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -28,12 +29,14 @@
     <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
     <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
 
+    <!-- GET preserva a busca na URL e permite filtrar por nome ou categoria. -->
     <form class="search-bar" th:action="@{/produtos}" method="get">
         <label class="sr-only" for="busca">Buscar produto ou categoria</label>
         <input id="busca" name="busca" type="search" th:value="${busca}" placeholder="Buscar por produto ou categoria">
         <button class="button button-dark" type="submit">Buscar</button>
     </form>
 
+    <!-- Cada article é produzido pelo th:each; editar e excluir apontam para o CRUD do controller. -->
     <section class="product-grid" th:if="${!#lists.isEmpty(produtos)}">
         <article class="product-card" th:each="produto : ${produtos}">
             <a class="product-image-link" th:href="@{/produtos/{id}(id=${produto.id})}">

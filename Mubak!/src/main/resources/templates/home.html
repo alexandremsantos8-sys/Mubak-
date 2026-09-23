@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Página pública inicial: apresenta o catálogo e direciona o visitante para login/cadastro. -->
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +13,7 @@
 </head>
 <body>
 <main class="home-shell">
+    <!-- Navegação pública; os links de catálogo/venda passam pelo login antes da área protegida. -->
     <nav class="site-nav home-nav" aria-label="Navegação principal">
         <a class="brand-mark" th:href="@{/}">MUBAK<span>.</span></a>
         <div class="nav-links"><a th:href="@{/login}">Login</a><a th:href="@{/login}">Vender</a></div>
@@ -19,6 +21,7 @@
         <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
     </nav>
 
+    <!-- Hero: texto de apresentação à esquerda e vitrine 3D/fallback à direita. -->
     <section class="home-hero" aria-labelledby="hero-title">
         <div class="hero-copy">
             <p class="eyebrow">MUBAK / CATÁLOGO</p>
@@ -39,6 +42,7 @@
         </div>
     </section>
 
+    <!-- Blocos institucionais explicam as duas propostas: descobrir e vender. -->
     <section class="home-section" aria-labelledby="discover-title">
         <div class="home-section-inner">
             <h2 id="discover-title">Tudo começa com uma boa descoberta.</h2>

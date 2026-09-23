@@ -1,7 +1,9 @@
 <!doctype html>
+<!-- Formulário de cliente: th:object liga os campos ao DTO UsuarioForm. -->
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head><meta charset="UTF-8"><title>Criar conta | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}"></head>
 <body><main class="page-shell"><div class="content-wrap"><h1>Criar conta.</h1><div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+<!-- O POST é validado pelo Spring e, depois, pelo UsuarioService (documento, e-mail e senha). -->
 <form class="product-form" th:action="@{/cadastro}" th:object="${usuarioForm}" method="post"><section class="form-section">
 <label for="nome">Nome/Razão Social</label><input id="nome" th:field="*{nome}" required>
 <label for="documento">CPF/CNPJ</label><input id="documento" type="text" th:field="*{documento}" placeholder="XXX.XXX.XXX-XX ou XX.XXX.XXX/0001-XX" maxlength="18" inputmode="numeric" required>
@@ -12,6 +14,7 @@
 <label for="confirmacaoSenha">Confirmação de senha</label><input id="confirmacaoSenha" type="password" th:field="*{confirmacaoSenha}" required>
 </section><div class="form-actions"><button class="button button-primary" type="submit">Criar conta</button><a class="button button-secondary" th:href="@{/login}">Login</a></div></form></div></main>
 <script>
+// Estes listeners apenas aplicam máscara visual; o servidor remove a máscara novamente.
 const documento = document.getElementById('documento');
 const dataNascimento = document.getElementById('dataNascimento');
 documento.addEventListener('input', () => { const valor = documento.value.replace(/\D/g, '').slice(0, 14); documento.value = valor.length > 11 ? valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); });

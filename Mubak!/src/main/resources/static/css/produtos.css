@@ -1,3 +1,4 @@
+/* Folha compartilhada por login, cadastro, catálogo, detalhe e formulários administrativos. */
 :root {
     --paper: #f5f5f7;
     --white: #fff;
@@ -16,6 +17,7 @@ body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Ave
 a { color: inherit; }
 .page-shell { min-height: 100vh; }
 .site-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 52px; padding: 0 max(24px, calc((100% - 1180px) / 2)); background: rgba(245,245,247,.88); border-bottom: 1px solid rgba(210,210,215,.7); backdrop-filter: blur(18px); }
+/* Componentes reutilizados: navegação, botões, alertas e campos dos formulários. */
 .brand, .brand-mark { color: var(--ink); font-size: .95rem; font-weight: 700; letter-spacing: .16em; text-decoration: none; }
 .brand-mark span { color: var(--accent); }
 .nav-links { display: flex; align-items: center; gap: 26px; }
@@ -48,6 +50,7 @@ h1 { max-width: 800px; margin: 0; font-size: clamp(3.4rem, 8vw, 7rem); line-heig
 .search-bar input { flex: 1; min-width: 0; border: 0; border-radius: 0; padding: 12px 0; color: var(--ink); background: transparent; font: 1.05rem "Avenir Next", "Helvetica Neue", sans-serif; }
 .search-bar input:focus { outline: 0; }
 .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 52px 22px; }
+/* O grid vira uma coluna no breakpoint mobile definido no final do arquivo. */
 .product-card { min-width: 0; background: transparent; }
 .product-image-link { display: block; overflow: hidden; background: #e8edf2; }
 .product-image { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
@@ -78,6 +81,7 @@ h1 { max-width: 800px; margin: 0; font-size: clamp(3.4rem, 8vw, 7rem); line-heig
 .detail-data dt { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .detail-data dd { margin: 0; font-weight: 600; text-align: right; }
 .product-form { display: grid; gap: 1px; background: var(--line); }
+/* Seções de formulário se reorganizam em uma coluna em telas menores. */
 .form-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding: 42px; background: var(--white); }
 .form-section h2 { grid-column: 1 / -1; margin: 0 0 10px; font-size: 1.55rem; letter-spacing: -.04em; }
 .field { display: grid; gap: 9px; }

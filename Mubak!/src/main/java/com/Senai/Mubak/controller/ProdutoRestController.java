@@ -27,6 +27,7 @@ public class ProdutoRestController {
         this.produtoService = produtoService;
     }
 
+    // API JSON paralela às telas Thymeleaf: permite integração com outros clientes.
     @GetMapping
     public List<produto> listar() {
         return produtoService.listar(null);

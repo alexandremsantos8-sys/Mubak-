@@ -30,12 +30,14 @@ public class ProdutoController {
         this.imagemService = imagemService;
     }
 
+    // Abre o formulário vazio usado para cadastrar um novo produto.
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("produto", new produto());
         return "produtos/form";
     }
 
+    // Busca o produto antes de abrir o mesmo formulário em modo de edição.
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -47,6 +49,7 @@ public class ProdutoController {
         }
     }
 
+    // Recebe campos e arquivo, salva a imagem e então persiste os dados do produto.
     @PostMapping
     public String salvar(@Valid @ModelAttribute produto produto, BindingResult bindingResult,
                          @RequestParam("imagem") MultipartFile imagem,
@@ -65,6 +68,7 @@ public class ProdutoController {
         }
     }
 
+    // Monta a tela pública de detalhes de um produto específico.
     @GetMapping("/{id}")
     public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -76,6 +80,7 @@ public class ProdutoController {
         }
     }
 
+    // Atualiza os campos e mantém a imagem antiga quando nenhum novo arquivo é enviado.
     @PostMapping("/{id}")
     public String atualizar(@PathVariable Long id, @Valid @ModelAttribute produto produto,
                             BindingResult bindingResult,
@@ -100,6 +105,7 @@ public class ProdutoController {
         return "redirect:/produtos";
     }
 
+    // Exclui o produto e devolve o usuário ao catálogo com uma mensagem temporária.
     @PostMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -111,6 +117,7 @@ public class ProdutoController {
         return "redirect:/produtos";
     }
 
+    // Lista todos os produtos ou filtra por nome/categoria quando há um termo de busca.
     @GetMapping
     public String listar(@RequestParam(required = false) String busca, Model model) {
         model.addAttribute("produtos", produtoService.listar(busca));

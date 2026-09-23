@@ -17,6 +17,7 @@ public class ImagemService {
     private static final Set<String> TIPOS_PERMITIDOS = Set.of("image/jpeg", "image/png", "image/webp", "image/gif");
     private final Path pastaUpload = Paths.get("uploads").toAbsolutePath().normalize();
 
+    // Valida o tipo, gera nome único e grava o arquivo fora de src/main/resources.
     public String salvar(MultipartFile arquivo) {
         if (arquivo == null || arquivo.isEmpty()) {
             throw new IllegalArgumentException("Selecione uma imagem para o produto.");

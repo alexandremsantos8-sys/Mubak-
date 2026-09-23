@@ -1,3 +1,4 @@
+// Vitrine 3D da home: cria a cena Three.js, anima os produtos e reage ao mouse.
 (function () {
     let scene, camera, renderer, raycaster;
     let centralProduct, productRing = [];
@@ -27,6 +28,7 @@
     let ambientLight, dirLight, brandLight;
 
     function init() {
+        // A inicialização é tolerante: sem Three.js ou canvas, a home usa o fallback HTML.
         if (scene) return;
         const canvas = document.getElementById('marketplace-canvas');
         if (typeof THREE === 'undefined') return;
@@ -140,6 +142,7 @@
     }
 
     function createStage() {
+        // Palco circular e linha de contorno que sustentam visualmente os produtos.
         const stageMat = new THREE.MeshStandardMaterial({
             color: COLORS.stage,
             metalness: 0.05,
@@ -196,6 +199,7 @@
     }
 
     function createProductRing() {
+        // Produtos decorativos distribuídos em anel ao redor do item central.
         const ringRadius = RING_RADIUS;
         const count = 6;
 
@@ -352,6 +356,7 @@
     }
 
     function onPointerMove(e) {
+        // Raycaster identifica o produto sob o cursor e acende a luz de destaque.
         const rect = renderer.domElement.getBoundingClientRect();
         pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
