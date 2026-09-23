@@ -1,0 +1,53 @@
+# Instruções de inicialização do Mubak
+
+## Pré-requisitos
+
+- Windows PowerShell ou Prompt de Comando
+- Java 25 instalado em `C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot`
+- Acesso à internet para baixar dependências Maven
+- Banco Supabase configurado em `Mubak!\src\main\resources\application.properties`
+
+## Iniciar a aplicação
+
+Abra um terminal na pasta onde este arquivo está localizado e execute:
+
+```powershell
+.\_tmp_run.cmd
+```
+
+Alternativamente, execute diretamente dentro da pasta `Mubak!`:
+
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot'
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+.\mvnw.cmd spring-boot:run
+```
+
+Quando aparecer `Tomcat started on port 8080`, abra:
+
+```text
+http://localhost:8080/
+```
+
+## Parar a aplicação
+
+No terminal onde ela está executando, pressione `Ctrl+C`.
+
+## Testar e construir
+
+Na pasta `Mubak!`, execute:
+
+```powershell
+.\mvnw.cmd clean test
+.\mvnw.cmd clean package
+```
+
+A aplicação foi validada com Java 25, conexão ao PostgreSQL/Supabase e resposta HTTP `200` na página inicial.
+
+## Observação sobre o banco
+
+O arquivo `application.properties` contém a conexão atual do Supabase. Para outro ambiente, altere essas configurações antes de iniciar a aplicação e não compartilhe credenciais reais em arquivos versionados.
+
+CÓDIGO PARA EXECUÇÃO:
+
+Set-Location '%Documents%\TeraBum\Mubak-\Mubak!'; $env:JAVA_HOME=%'ProgramFiles%\Eclipse Adoptium\jdk-25.0.4.101-hotspot'; $env:Path="$env:JAVA_HOME\bin;$env:Path"; .\mvnw.cmd spring-boot:run -e
