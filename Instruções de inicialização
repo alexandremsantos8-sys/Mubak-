@@ -48,6 +48,6 @@ A aplicação foi validada com Java 25, conexão ao PostgreSQL/Supabase e respos
 
 O arquivo `application.properties` contém a conexão atual do Supabase. Para outro ambiente, altere essas configurações antes de iniciar a aplicação e não compartilhe credenciais reais em arquivos versionados.
 
-CÓDIGO PARA EXECUÇÃO:
+## CÓDIGO PARA EXECUÇÃO:
 
-Set-Location '%Documents%\TeraBum\Mubak-\Mubak!'; $env:JAVA_HOME=%'ProgramFiles%\Eclipse Adoptium\jdk-25.0.4.101-hotspot'; $env:Path="$env:JAVA_HOME\bin;$env:Path"; .\mvnw.cmd spring-boot:run -e
+.\mvnw.cmd spring-boot:run -e
