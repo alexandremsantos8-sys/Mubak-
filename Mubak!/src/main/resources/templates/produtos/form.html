@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Formulário compartilhado por criação e edição; o id decide texto e destino do POST. -->
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -27,6 +28,7 @@
 
     <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
 
+    <!-- multipart/form-data é necessário para enviar a imagem junto dos campos do produto. -->
     <form class="product-form"
           th:action="${produto.id == null ? '/produtos' : '/produtos/' + produto.id}"
           th:object="${produto}" method="post" enctype="multipart/form-data">

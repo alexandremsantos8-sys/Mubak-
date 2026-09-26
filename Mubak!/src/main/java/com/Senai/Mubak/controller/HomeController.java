@@ -3,6 +3,7 @@ package com.Senai.Mubak.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import com.Senai.Mubak.repository.ProdutoRepository;
 
 @Controller
@@ -14,6 +15,7 @@ public class HomeController {
         this.produtoRepository = produtoRepository;
     }
 
+    // A página inicial é pública e apenas encaminha para o template home.html.
     @GetMapping("/")
     public String inicio(Model model) {
         var produtosDisponiveis = produtoRepository.findAll().stream()

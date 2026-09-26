@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Exibição somente leitura de um produto carregado pelo id da URL. -->
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -23,8 +24,6 @@
     <header class="detail-header">
         <a class="button button-secondary" th:href="@{/produtos}">Voltar ao catálogo</a>
     </header>
-    <div class="alert alert-success" th:if="${carrinhoMensagem}" th:text="${carrinhoMensagem}" role="status"></div>
-    <div class="alert alert-error" th:if="${erroCarrinho}" th:text="${erroCarrinho}" role="alert"></div>
     <article class="detail-layout">
         <img class="detail-image" th:src="${produto.imagemUrl}" th:alt="${produto.nome}" onerror="this.onerror=null;this.src='/images/produto-placeholder.svg';">
         <div class="detail-content">

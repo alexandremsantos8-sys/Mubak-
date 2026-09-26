@@ -16,6 +16,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "produtos")
+// Entidade JPA que representa o item exibido no catálogo e manipulado pelo CRUD.
 public class produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

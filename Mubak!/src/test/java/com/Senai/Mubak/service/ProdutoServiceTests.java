@@ -17,6 +17,7 @@ import com.Senai.Mubak.model.produto;
 import com.Senai.Mubak.repository.ProdutoRepository;
 
 @ExtendWith(MockitoExtension.class)
+// Testes unitários das regras de produto usando repository simulado, sem banco real.
 class ProdutoServiceTests {
 
     @Mock

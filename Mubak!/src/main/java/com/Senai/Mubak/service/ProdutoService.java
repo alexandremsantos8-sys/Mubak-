@@ -18,16 +18,19 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
+    // O service valida os dados antes de entregar a entidade ao repository.
     public produto salvar(produto produto) {
         validar(produto);
         return produtoRepository.save(produto);
     }
 
+    // Busca centralizada: quando não encontra, todas as telas recebem a mesma mensagem.
     public produto buscarPorId(Long id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado."));
     }
 
+    // Copia os campos editáveis para a entidade já existente, preservando o ID do banco.
     public produto atualizar(Long id, produto dados) {
         validar(dados);
         produto produto = buscarPorId(id);
@@ -41,12 +44,14 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
+    // Força o flush para que a exclusão seja enviada ao banco imediatamente.
     public void excluir(Long id) {
         produto produto = buscarPorId(id);
         produtoRepository.delete(produto);
         produtoRepository.flush();
     }
 
+    // Sem busca retorna tudo; com busca consulta nome e categoria ignorando maiúsculas/minúsculas.
     public List<produto> listar(String busca) {
         if (!StringUtils.hasText(busca)) {
             return produtoRepository.findAll();
@@ -54,6 +59,7 @@ public class ProdutoService {
         return produtoRepository.findByNomeContainingIgnoreCaseOrCategoriaContainingIgnoreCase(busca, busca);
     }
 
+    // Regras de domínio que protegem a consistência mínima dos produtos.
     private void validar(produto produto) {
         if (!StringUtils.hasText(produto.getNome())) {
             throw new IllegalArgumentException("Informe o nome do produto.");

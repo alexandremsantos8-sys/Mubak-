@@ -1,3 +1,4 @@
+// Abre e fecha o menu em telas pequenas, mantendo aria-expanded sincronizado.
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.mobile-menu').forEach((button) => {
         const navigation = button.closest('.site-nav');
