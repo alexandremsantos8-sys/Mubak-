@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carrinho | Mubak</title>
+    <link rel="stylesheet" th:href="@{/css/produtos.css(v=5)}">
+</head>
+<body>
+<main class="page-shell">
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a class="brand" th:href="@{/}">MUBAK.</a>
+        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a></div>
+        <a class="nav-action" th:href="@{/login}">Entrar</a>
+        <a class="cart-link is-current" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+            <span class="cart-badge" th:if="${cartCount > 0}" th:text="${cartCount}"></span>
+        </a>
+    </nav>
+
+    <div class="content-wrap cart-page">
+        <header class="page-header cart-heading">
+            <div><p class="eyebrow">MUBAK / SUA SELEÇÃO</p><h1>Seu carrinho.</h1></div>
+            <a class="text-link" th:href="@{/produtos}">Continuar comprando <span aria-hidden="true">&#8594;</span></a>
+        </header>
+        <div class="alert alert-success" th:if="${carrinhoMensagem}" th:text="${carrinhoMensagem}" role="status"></div>
+        <div class="alert alert-error" th:if="${erroCarrinho}" th:text="${erroCarrinho}" role="alert"></div>
+
+        <div class="cart-layout" th:if="${!#lists.isEmpty(linhas)}">
+            <section class="cart-lines" aria-label="Produtos no carrinho">
+                <article class="cart-line" th:each="linha : ${linhas}">
+                    <a class="cart-line-image" th:href="@{/produtos/{id}(id=${linha.product.id})}">
+                        <img th:src="${linha.product.imagemUrl}" th:alt="${linha.product.nome}" onerror="this.onerror=null;this.src='/images/produto-placeholder.svg';">
+                    </a>
+                    <div class="cart-line-main">
+                        <p class="product-category" th:text="${linha.product.categoria}"></p>
+                        <h2><a th:href="@{/produtos/{id}(id=${linha.product.id})}" th:text="${linha.product.nome}"></a></h2>
+                        <p class="cart-line-unit-price" th:text="${'R$ ' + #numbers.formatDecimal(linha.product.preco, 1, 2) + ' cada'}"></p>
+                        <div class="cart-line-actions">
+                            <form class="quantity-control" th:action="@{/carrinho/quantidade/{id}(id=${linha.product.id})}" method="post">
+                                <button type="submit" name="quantidade" th:value="${linha.quantity - 1}" aria-label="Diminuir quantidade" th:disabled="${linha.quantity <= 1}">−</button>
+                                <output th:text="${linha.quantity}" th:aria-label="${'Quantidade: ' + linha.quantity}"></output>
+                                <button type="submit" name="quantidade" th:value="${linha.quantity + 1}" aria-label="Aumentar quantidade" th:disabled="${linha.quantity >= linha.product.estoque}">+</button>
+                            </form>
+                            <form th:action="@{/carrinho/remover/{id}(id=${linha.product.id})}" method="post">
+                                <button class="cart-remove" type="submit" aria-label="Remover produto do carrinho">Remover</button>
+                            </form>
+                        </div>
+                    </div>
+                    <strong class="cart-line-total" th:text="${'R$ ' + #numbers.formatDecimal(linha.total, 1, 2)}"></strong>
+                </article>
+                <form class="cart-clear-form" th:action="@{/carrinho/esvaziar}" method="post">
+                    <button class="text-link" type="submit">Esvaziar carrinho</button>
+                </form>
+            </section>
+
+            <aside class="cart-summary" aria-labelledby="summary-title">
+                <h2 id="summary-title">Resumo do pedido</h2>
+                <div class="cart-summary-row"><span>Produtos (<span th:text="${quantidadeTotal}"></span>)</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
+                <div class="cart-summary-row"><span>Frete</span><span>A calcular</span></div>
+                <div class="cart-summary-total"><span>Subtotal</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
+                <p class="cart-checkout-note">A finalização e o pagamento ainda não estão disponíveis nesta loja.</p>
+                <a class="button button-secondary cart-continue" th:href="@{/produtos}">Continuar comprando</a>
+            </aside>
+        </div>
+
+        <section class="cart-empty" th:if="${#lists.isEmpty(linhas)}">
+            <div class="cart-empty-icon" aria-hidden="true">&#128722;</div>
+            <h2>Seu carrinho está vazio.</h2>
+            <p>Explore a loja e encontre algo para você.</p>
+            <a class="button button-primary" th:href="@{/produtos}">Explorar produtos</a>
+        </section>
+    </div>
+</main>
+</body>
+</html>

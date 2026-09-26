@@ -50,7 +50,7 @@ public class produto {
     @Column(nullable = false, length = 80)
     private String categoria;
 
-    @NotBlank(message = "Informe o vendedor.")
+    // Retained for compatibility with existing database rows; admins set it to Mubak.
     @Size(max = 120, message = "O vendedor deve ter no máximo 120 caracteres.")
     @Column(nullable = false, length = 120)
     private String vendedor;

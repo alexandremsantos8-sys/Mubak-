@@ -11,14 +11,14 @@
 <main class="page-shell">
     <nav class="site-nav" aria-label="Navegação principal">
         <a class="brand" th:href="@{/}">MUBAK.</a>
-        <div class="nav-links"><a th:href="@{/produtos}">Catálogo</a><a th:href="@{/produtos/novo}">Vender</a></div>
-        <a class="nav-action" th:href="@{/produtos}">Catálogo</a>
+        <div class="nav-links"><a th:href="@{/}">Loja</a><a th:href="@{/produtos}">Produtos</a><a th:href="@{/admin/usuarios}">Administração</a></div>
+        <a class="nav-action" th:href="@{/produtos}">Loja</a>
         <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
     </nav>
     <div class="content-wrap">
     <header class="page-header">
         <div>
-            <p class="eyebrow">MUBAK / VITRINE</p>
+            <p class="eyebrow">ADMINISTRAÇÃO / CATÁLOGO</p>
             <h1 th:text="${produto.id == null ? 'Cadastrar produto' : 'Editar produto'}">Cadastrar produto</h1>
             <p class="intro" th:text="${produto.id == null ? 'Adicione um item ao catálogo com preço, estoque e imagem.' : 'Atualize os dados do produto no catálogo.'}">Adicione um item ao catálogo com preço, estoque e imagem.</p>
         </div>
@@ -46,11 +46,6 @@
                 <label for="categoria">Categoria</label>
                 <input id="categoria" type="text" th:field="*{categoria}" maxlength="80" required>
                 <small class="field-error" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
-            </div>
-            <div class="field">
-                <label for="vendedor">Vendedor</label>
-                <input id="vendedor" type="text" th:field="*{vendedor}" maxlength="120" required>
-                <small class="field-error" th:if="${#fields.hasErrors('vendedor')}" th:errors="*{vendedor}"></small>
             </div>
         </section>
 

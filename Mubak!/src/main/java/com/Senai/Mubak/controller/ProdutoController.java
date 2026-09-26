@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Senai.Mubak.model.produto;
+import com.Senai.Mubak.config.AuthenticationInterceptor;
 import com.Senai.Mubak.service.ImagemService;
 import com.Senai.Mubak.service.ProdutoService;
 
@@ -31,13 +34,18 @@ public class ProdutoController {
     }
 
     @GetMapping("/novo")
-    public String novo(Model model) {
-        model.addAttribute("produto", new produto());
+    public String novo(Model model, HttpSession session, HttpServletResponse response) {
+        if (!adminPermitido(session, response)) return null;
+        produto produto = new produto();
+        produto.setVendedor("Mubak");
+        model.addAttribute("produto", produto);
         return "produtos/form";
     }
 
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes,
+                         HttpSession session, HttpServletResponse response) {
+        if (!adminPermitido(session, response)) return null;
         try {
             model.addAttribute("produto", produtoService.buscarPorId(id));
             return "produtos/form";
@@ -50,12 +58,16 @@ public class ProdutoController {
     @PostMapping
     public String salvar(@Valid @ModelAttribute produto produto, BindingResult bindingResult,
                          @RequestParam("imagem") MultipartFile imagem,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes, HttpSession session,
+                         HttpServletResponse response) {
+        if (!adminPermitido(session, response)) return null;
+        produto.setVendedor("Mubak");
         if (bindingResult.hasErrors()) {
             return "produtos/form";
         }
         try {
             produto.setImagemUrl(imagemService.salvar(imagem));
+            produto.setVendedor("Mubak");
             produtoService.salvar(produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso.");
             return "redirect:/produtos";
@@ -80,7 +92,10 @@ public class ProdutoController {
     public String atualizar(@PathVariable Long id, @Valid @ModelAttribute produto produto,
                             BindingResult bindingResult,
                             @RequestParam("imagem") MultipartFile imagem,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes, HttpSession session,
+                            HttpServletResponse response) {
+        if (!adminPermitido(session, response)) return null;
+        produto.setVendedor("Mubak");
         if (bindingResult.hasErrors()) {
             return "produtos/form";
         }
@@ -91,6 +106,7 @@ public class ProdutoController {
             } else {
                 produto.setImagemUrl(produtoAtual.getImagemUrl());
             }
+            produto.setVendedor("Mubak");
             produtoService.atualizar(id, produto);
             redirectAttributes.addFlashAttribute("sucesso", "Produto atualizado com sucesso.");
         } catch (IllegalArgumentException exception) {
@@ -101,7 +117,9 @@ public class ProdutoController {
     }
 
     @PostMapping("/{id}/excluir")
-    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes,
+                          HttpSession session, HttpServletResponse response) {
+        if (!adminPermitido(session, response)) return null;
         try {
             produtoService.excluir(id);
             redirectAttributes.addFlashAttribute("sucesso", "Produto excluído com sucesso.");
@@ -112,9 +130,16 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public String listar(@RequestParam(required = false) String busca, Model model) {
+    public String listar(@RequestParam(required = false) String busca, Model model, HttpSession session) {
         model.addAttribute("produtos", produtoService.listar(busca));
         model.addAttribute("busca", busca == null ? "" : busca);
+        model.addAttribute("admin", AuthenticationInterceptor.isAdminProfile(session.getAttribute("perfil")));
         return "produtos/lista";
+    }
+
+    private boolean adminPermitido(HttpSession session, HttpServletResponse response) {
+        if (session != null && AuthenticationInterceptor.isAdminProfile(session.getAttribute("perfil"))) return true;
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        return false;
     }
 }

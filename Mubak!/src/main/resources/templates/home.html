@@ -4,47 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mubak | Catálogo</title>
-    <link rel="stylesheet" th:href="@{/css/produtos.css(v=4)}">
-    <link rel="stylesheet" th:href="@{/css/home.css(v=3)}">
-    <script th:src="@{/js/navigation.js}" defer></script>
-    <script th:src="@{/js/three.min.js}" defer></script>
-    <script th:src="@{/js/marketplace-3d.js(v=3)}" defer></script>
+    <link rel="stylesheet" th:href="@{/css/produtos.css(v=5)}">
+    <link rel="stylesheet" th:href="@{/css/home.css(v=9)}">
+    <script th:src="@{/js/navigation.js(v=2)}" defer></script>
 </head>
 <body>
 <main class="home-shell">
     <nav class="site-nav home-nav" aria-label="Navegação principal">
         <a class="brand-mark" th:href="@{/}">MUBAK<span>.</span></a>
-        <div class="nav-links"><a th:href="@{/login}">Login</a><a th:href="@{/login}">Vender</a></div>
+        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a></div>
         <a class="nav-action" th:href="@{/login}" aria-label="Entrar">Entrar</a>
+        <a class="cart-link" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+            <span class="cart-badge" th:if="${cartCount > 0}" th:text="${cartCount}"></span>
+        </a>
         <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
     </nav>
 
-    <section class="home-hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-            <p class="eyebrow">MUBAK / CATÁLOGO</p>
-            <h1 id="hero-title">Escolhas que fazem sentido.</h1>
-            <p class="hero-intro">Descubra produtos de vendedores independentes em um catálogo feito para encontrar, comparar e escolher com calma.</p>
-            <div class="hero-actions">
-                <a class="button button-primary button-login-hero" th:href="@{/login}">Entrar para explorar</a>
-                <a class="text-link" th:href="@{/login}">Cadastrar produto <span aria-hidden="true">&#8594;</span></a>
+    <section class="home-products" aria-labelledby="home-products-title">
+        <div class="home-products-inner">
+            <div class="home-products-heading">
+                <div>
+                    <p class="eyebrow">MUBAK / DESCOBERTAS</p>
+                    <h2 id="home-products-title">Produtos em destaque</h2>
+                    <p>Uma seleção do que está disponível no catálogo.</p>
+                </div>
+                <div class="carousel-controls" th:if="${#lists.size(produtosCarrossel) > 1}">
+                    <button class="carousel-arrow" type="button" data-carousel-direction="-1" aria-label="Produtos anteriores">&#8592;</button>
+                    <button class="carousel-arrow" type="button" data-carousel-direction="1" aria-label="Próximos produtos">&#8594;</button>
+                </div>
             </div>
-        </div>
-        <div class="hero-visual" aria-label="Vitrine 3D com produtos do marketplace Mubak">
-            <div class="hero-visual-fallback" aria-hidden="true">
-                <img th:src="@{/images/produto-placeholder.svg}" alt="">
-                <span>Vitrine 3D indisponível neste dispositivo</span>
+            <div class="product-carousel" th:if="${!#lists.isEmpty(produtosCarrossel)}">
+                <div class="product-carousel-track" id="home-product-carousel" role="list" aria-label="Produtos disponíveis">
+                    <article class="carousel-product-card" role="listitem" th:each="produto : ${produtosCarrossel}">
+                        <a class="carousel-product-image" th:href="@{/produtos/{id}(id=${produto.id})}">
+                            <img th:src="${produto.imagemUrl}" th:alt="${produto.nome}" loading="lazy"
+                                 onerror="this.onerror=null;this.src='/images/produto-placeholder.svg';">
+                            <span class="carousel-product-category" th:text="${produto.categoria}"></span>
+                        </a>
+                        <div class="carousel-product-info">
+                    <h3 th:text="${produto.nome}"></h3>
+                            <strong class="carousel-product-price" th:text="${'R$ ' + #numbers.formatDecimal(produto.preco, 1, 2)}"></strong>
+                            <a class="carousel-product-link" th:href="@{/produtos/{id}(id=${produto.id})}">Ver produto <span aria-hidden="true">&#8594;</span></a>
+                        </div>
+                    </article>
+                </div>
             </div>
-            <canvas id="marketplace-canvas" class="marketplace-canvas" aria-hidden="true"></canvas>
-            <span class="hero-visual-label">Uma nova forma de encontrar</span>
+            <div class="carousel-empty" th:if="${#lists.isEmpty(produtosCarrossel)}">
+                <p>Novos produtos estarão disponíveis em breve.</p>
+                <a class="text-link" th:href="@{/login}">Acessar o Mubak <span aria-hidden="true">&#8594;</span></a>
+            </div>
         </div>
     </section>
+
+
+    <section class="home-hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <p class="eyebrow">MUBAK / LOJA VIRTUAL</p>
+            <h1 id="hero-title">Tudo o que você procura, em um só lugar.</h1>
+            <p class="hero-intro">Explore a seleção Mubak e encontre seu próximo produto com praticidade e confiança.</p>
+            <div class="hero-actions">
+                <a class="button button-primary button-login-hero" th:href="@{/produtos}">Explorar produtos</a>
+                <a class="text-link" th:href="@{/login}">Acessar minha conta <span aria-hidden="true">&#8594;</span></a>
+            </div>
+        </div>
+    </section>
+
 
     <section class="home-section" aria-labelledby="discover-title">
         <div class="home-section-inner">
             <h2 id="discover-title">Tudo começa com uma boa descoberta.</h2>
             <div>
-                <p>Pesquise por nome ou categoria e encontre o que procura sem distrações. O catálogo mantém o essencial à vista: imagem, preço, vendedor e disponibilidade.</p>
-                <a class="text-link" th:href="@{/login}">Ver todos os produtos <span aria-hidden="true">&#8594;</span></a>
+                <p>Pesquise por nome ou categoria e encontre o que procura sem distrações. Veja imagens, preços e disponibilidade antes de escolher.</p>
+                <a class="text-link" th:href="@{/produtos}">Ver todos os produtos <span aria-hidden="true">&#8594;</span></a>
                 <div class="home-feature-line">
                     <div><strong>Encontre</strong><span>Uma busca direta para chegar ao produto certo.</span></div>
                     <div><strong>Compare</strong><span>Informações claras para decidir no seu ritmo.</span></div>
@@ -53,20 +85,20 @@
             </div>
         </div>
     </section>
-    <section class="home-section alt" aria-labelledby="seller-title">
+    <section class="home-section alt" aria-labelledby="store-title">
         <div class="home-section-inner">
-            <h2 id="seller-title">Seu produto merece espaço.</h2>
+            <h2 id="store-title">Sua próxima compra começa aqui.</h2>
             <div>
-                <p>Cadastre itens, atualize estoque e mantenha sua vitrine organizada. Uma experiência simples para quem vende e para quem compra.</p>
-                <a class="text-link" th:href="@{/login}">Cadastrar um produto <span aria-hidden="true">&#8594;</span></a>
+                <p>Encontre produtos selecionados pela Mubak e acompanhe as informações importantes em cada página.</p>
+                <a class="text-link" th:href="@{/produtos}">Conhecer a loja <span aria-hidden="true">&#8594;</span></a>
             </div>
         </div>
     </section>
     <section class="home-cta" aria-labelledby="cta-title">
-        <h2 id="cta-title">Veja o que está esperando por você.</h2>
-        <a class="button button-primary button-login-cta" th:href="@{/login}">Fazer login e abrir catálogo</a>
+        <h2 id="cta-title">Descubra sua próxima escolha.</h2>
+        <a class="button button-primary button-login-cta" th:href="@{/produtos}">Explorar a loja</a>
     </section>
-    <footer class="home-footer"><div class="home-footer-inner"><span>MUBAK.</span><span>Um catálogo para escolhas melhores.</span><span>&copy; 2026 Mubak</span></div></footer>
+    <footer class="home-footer"><div class="home-footer-inner"><span>MUBAK.</span><span>Sua loja virtual.</span><span>&copy; 2026 Mubak</span></div></footer>
 </main>
 </body>
 </html>

@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Produtos | Mubak</title>
-    <link rel="stylesheet" th:href="@{/css/produtos.css(v=4)}">
+    <link rel="stylesheet" th:href="@{/css/produtos.css(v=5)}">
     <script th:src="@{/js/navigation.js}" defer></script>
 </head>
 <body>
 <main class="page-shell">
     <nav class="site-nav" aria-label="Navegação principal">
         <a class="brand" th:href="@{/}">MUBAK.</a>
-        <div class="nav-links"><a th:href="@{/produtos}">Catálogo</a><a th:href="@{/produtos/novo}">Vender</a></div>
-        <a class="nav-action" th:href="@{/produtos/novo}">Vender</a>
+        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a></div>
+        <a class="nav-action" th:if="${!admin}" th:href="@{/login}">Entrar</a>
+        <form th:if="${admin}" th:action="@{/logout}" method="post"><button class="nav-action" type="submit">Sair</button></form>
+        <a class="cart-link" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+            <span class="cart-badge" th:if="${cartCount > 0}" th:text="${cartCount}"></span>
+        </a>
         <button class="mobile-menu" type="button" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
     </nav>
     <div class="content-wrap">
     <header class="page-header search-header">
         <div>
-            <p class="eyebrow">CATÁLOGO</p>
-            <h1>Produtos para escolher sem pressa.</h1>
-            <p class="intro">Consulte o catálogo e acompanhe o estoque disponível.</p>
+            <p class="eyebrow">LOJA MUBAK</p>
+            <h1>Encontre o que procura.</h1>
+            <p class="intro">Explore os produtos disponíveis na nossa loja.</p>
         </div>
-        <a class="button button-primary" th:href="@{/produtos/novo}">Novo produto</a>
+        <a class="button button-primary" th:if="${admin}" th:href="@{/produtos/novo}">Adicionar produto</a>
     </header>
 
     <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
@@ -42,13 +47,12 @@
             <div class="product-content">
                 <p class="product-category" th:text="${produto.categoria}"></p>
                 <h2 th:text="${produto.nome}"></h2>
-                <p class="product-seller">Vendido por <strong th:text="${produto.vendedor}"></strong></p>
                 <div class="product-footer">
                     <strong class="product-price" th:text="${'R$ ' + #numbers.formatDecimal(produto.preco, 1, 2)}"></strong>
                     <span class="stock" th:classappend="${produto.estoque == 0} ? ' out-of-stock' : ''"
                           th:text="${produto.estoque == 0 ? 'Sem estoque' : produto.estoque + ' em estoque'}"></span>
                 </div>
-                <div class="product-actions">
+                <div class="product-actions" th:if="${admin}">
                     <a class="button button-secondary" th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a>
                     <form th:action="@{/produtos/{id}/excluir(id=${produto.id})}" method="post">
                         <button class="button button-danger" type="submit" onclick="return confirm('Excluir este produto?');">Excluir</button>
@@ -60,7 +64,7 @@
 
     <div class="empty-state" th:if="${#lists.isEmpty(produtos)}">
         <h2>Nenhum produto encontrado</h2>
-        <p>Cadastre o primeiro item ou tente outra busca.</p>
+        <p>Não encontramos produtos para esta busca. Tente outro termo.</p>
     </div>
     </div>
 </main>
