@@ -85,13 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const validCnpj = (value) => {
         const cnpj = digitsOnly(value); if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false;
-        const check = (length) => { let sum = 0; let weight = length - 5; for (let index = 0; index < length; index += 1) { sum += Number(cnpj[index]) * weight; weight = weight === 2 ? 9 : weight - 1; } return sum % 11 < 2 ? 0 : 11 - (sum % 11); };
+        const check = (length) => { let sum = 0; let weight = length === 12 ? 5 : 6; for (let index = 0; index < length; index += 1) { sum += Number(cnpj[index]) * weight; weight = weight === 2 ? 9 : weight - 1; } return sum % 11 < 2 ? 0 : 11 - (sum % 11); };
         return check(12) === Number(cnpj[12]) && check(13) === Number(cnpj[13]);
     };
     document.querySelectorAll('#pix-document, #boleto-document').forEach((input) => input.addEventListener('input', () => {
         const value = digitsOnly(input.value).slice(0, 14);
         input.value = value.length > 11 ? value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-        input.closest('.payment-fields').querySelector('[data-qr-button]').disabled = !(validCpf(value) || (input.id === 'boleto-document' && validCnpj(value)));
+        input.closest('.payment-fields').querySelector('[data-qr-button]').disabled = input.id === 'boleto-document' ? !validCnpj(value) : !validCpf(value);
     }));
     document.querySelectorAll('[data-qr-button]').forEach((button) => button.addEventListener('click', () => { paymentModal.querySelector('[data-checkout-status]').textContent = 'QR Code gerado. Escaneie para concluir o pagamento.'; }));
     document.querySelectorAll('[data-finish-payment]').forEach((button) => button.addEventListener('click', () => { button.closest('.modal-panel').querySelector('[data-checkout-status]').textContent = 'Pagamento validado. Seu pedido está pronto para confirmação.'; }));
