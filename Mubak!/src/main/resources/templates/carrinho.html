@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Carrinho | Mubak</title>
     <link rel="stylesheet" th:href="@{/css/produtos.css(v=5)}">
+    <script th:src="@{/js/navigation.js(v=3)}" defer></script>
 </head>
 <body>
 <main class="page-shell">
@@ -59,8 +60,9 @@
                 <div class="cart-summary-row"><span>Produtos (<span th:text="${quantidadeTotal}"></span>)</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
                 <div class="cart-summary-row"><span>Frete</span><span>A calcular</span></div>
                 <div class="cart-summary-total"><span>Subtotal</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
-                <p class="cart-checkout-note">A finalização e o pagamento ainda não estão disponíveis nesta loja.</p>
-                <a class="button button-secondary cart-continue" th:href="@{/produtos}">Continuar comprando</a>
+                <p class="cart-checkout-note">Escolha a forma de pagamento e finalize seu pedido com segurança.</p>
+                <button class="button button-primary cart-buy" type="button" data-open-payment>Comprar</button>
+                <button class="button button-secondary cart-continue" type="button" data-open-policy>Política de trocas</button>
             </aside>
         </div>
 
@@ -72,5 +74,49 @@
         </section>
     </div>
 </main>
+
+<div class="modal" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel payment-panel">
+        <div class="modal-header">
+            <div><p class="eyebrow">MUBAK / PAGAMENTO</p><h2 id="payment-modal-title">Como você quer pagar?</h2></div>
+            <button class="modal-close" type="button" aria-label="Fechar pagamento" data-close-modal>&times;</button>
+        </div>
+        <div class="payment-options" role="list">
+            <button class="payment-option" type="button" data-payment-option="credit">Cartão de crédito <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="credit" hidden>
+                <div class="field card-number-field"><label for="credit-card-number">Número do cartão</label><div class="card-input-wrap"><input id="credit-card-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23"><span class="card-brand" data-card-brand aria-live="polite"></span></div><span class="field-error" data-error-for="credit-card-number"></span></div>
+                <div class="checkout-fields-grid"><div class="field"><label for="credit-expiry">Data de validade</label><input id="credit-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5"></div><div class="field"><label for="credit-cvv">CVV</label><input id="credit-cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="000" maxlength="4"></div></div>
+                <div class="field"><label for="credit-holder">Nome do titular</label><input id="credit-holder" type="text" autocomplete="cc-name" placeholder="Como aparece no cartão"></div>
+                <div class="field"><label for="credit-installments">Parcelamento</label><select id="credit-installments"><option value="1">1x sem juros</option><option value="2">2x com juros</option><option value="3">3x com juros</option><option value="4">4x com juros</option><option value="5">5x com juros</option><option value="6">6x com juros</option><option value="7">7x com juros</option><option value="8">8x com juros</option><option value="9">9x com juros</option><option value="10">10x com juros</option></select></div>
+                <button class="button button-primary payment-submit" type="button" data-finish-payment>Finalizar compra</button>
+            </div>
+
+            <button class="payment-option" type="button" data-payment-option="debit">Cartão de débito <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="debit" hidden>
+                <div class="field card-number-field"><label for="debit-card-number">Número do cartão</label><div class="card-input-wrap"><input id="debit-card-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23"><span class="card-brand" data-card-brand aria-live="polite"></span></div></div>
+                <div class="checkout-fields-grid"><div class="field"><label for="debit-expiry">Data de validade</label><input id="debit-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5"></div><div class="field"><label for="debit-cvv">CVV</label><input id="debit-cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="000" maxlength="4"></div></div>
+                <div class="field"><label for="debit-holder">Nome do titular</label><input id="debit-holder" type="text" autocomplete="cc-name" placeholder="Como aparece no cartão"></div>
+                <button class="button button-primary payment-submit" type="button" data-finish-payment>Finalizar compra</button>
+            </div>
+
+            <button class="payment-option" type="button" data-payment-option="pix">Pix <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="pix" hidden><div class="field"><label for="pix-document">CPF</label><input id="pix-document" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div><button class="button button-primary qr-button" type="button" data-qr-button disabled>Gerar QR Code</button></div>
+
+            <button class="payment-option" type="button" data-payment-option="boleto">Boleto <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="boleto" hidden><div class="field"><label for="boleto-document">CPF ou CNPJ</label><input id="boleto-document" type="text" inputmode="numeric" placeholder="Digite seu CPF ou CNPJ" maxlength="18"></div><button class="button button-primary qr-button" type="button" data-qr-button disabled>Gerar Boleto</button></div>
+        </div>
+        <p class="checkout-status" data-checkout-status role="status" aria-live="polite"></p>
+    </section>
+</div>
+
+<div class="modal" id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policy-modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel policy-panel">
+        <div class="modal-header"><div><p class="eyebrow">MUBAK / CONFIANÇA</p><h2 id="policy-modal-title">Política de trocas</h2></div><button class="modal-close" type="button" aria-label="Fechar política de trocas" data-close-modal>&times;</button></div>
+        <p>A troca segue as leis brasileiras, ou seja, você tem garantia e direito de arrependimento de 1 mês de balcão</p>
+        <button class="button button-primary policy-accept" type="button" data-close-modal>Li e aceito os termos</button>
+    </section>
+</div>
 </body>
 </html>
