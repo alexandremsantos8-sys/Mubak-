@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Perfis | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}"><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body><main class="page-shell admin-shell"><nav class="site-nav admin-nav"><a class="brand" th:href="@{/}">MUBAK.</a><div class="nav-links"><a th:href="@{/admin/perfis}">Perfis</a><a th:href="@{/admin/usuarios}">Usuários</a></div><a class="nav-action" th:href="@{/produtos}">Voltar à loja</a></nav>
+<div class="content-wrap"><header class="page-header"><div><p class="eyebrow">MUBAK / ADMINISTRAÇÃO</p><h1>Perfis de acesso.</h1><p class="intro">Escolha exatamente quais áreas cada função pode acessar.</p></div><a class="button button-primary" th:href="@{/admin/perfis/novo}">Novo perfil</a></header>
+<div class="admin-tabs"><a class="is-current" th:href="@{/admin/perfis}">Perfis</a><a th:href="@{/admin/usuarios}">Usuários</a></div>
+<div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div><div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+<section class="admin-grid"><article class="admin-card" th:each="p : ${perfis}"><div><h2 th:text="${p.nome}"></h2><p><span th:if="${p.venda}">Venda · </span><span th:if="${p.compra}">Compra · </span><span th:if="${p.gerenciamentoProduto}">Produtos · </span><span th:if="${p.administracao}">Administração</span></p></div><a class="text-link" th:href="@{/admin/perfis/editar/{id}(id=${p.id})}">Configurar permissões <span aria-hidden="true">&#8594;</span></a></article></section>
+</div></main></body></html>

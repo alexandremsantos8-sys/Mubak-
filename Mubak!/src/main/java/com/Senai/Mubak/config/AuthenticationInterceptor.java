@@ -7,12 +7,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-    public static boolean isAdminProfile(Object perfil) {
+    public static boolean isRootProfile(Object perfil) {
         if (perfil == null) {
             return false;
         }
         String valor = perfil.toString();
-        return "ROOT".equalsIgnoreCase(valor) || "ADMIN".equalsIgnoreCase(valor);
+        return "ROOT".equalsIgnoreCase(valor);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        if (uri.startsWith("/admin") && !isAdminProfile(session.getAttribute("perfil"))) {
+        if (uri.startsWith("/admin") && !isRootProfile(session.getAttribute("perfil"))) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return false;
         }
