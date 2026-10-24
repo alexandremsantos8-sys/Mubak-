@@ -140,12 +140,14 @@ public class ProdutoController {
     public String listar(@RequestParam(required = false) String busca, Model model, HttpSession session) {
         model.addAttribute("produtos", produtoService.listar(busca));
         model.addAttribute("busca", busca == null ? "" : busca);
-        model.addAttribute("admin", AuthenticationInterceptor.isAdminProfile(session.getAttribute("perfil")));
+        model.addAttribute("admin", AuthenticationInterceptor.isRootProfile(session.getAttribute("perfil"))
+            || Boolean.TRUE.equals(session.getAttribute("podeGerenciarProdutos")));
         return "produtos/lista";
     }
 
     private boolean adminPermitido(HttpSession session, HttpServletResponse response) {
-        if (session != null && AuthenticationInterceptor.isAdminProfile(session.getAttribute("perfil"))) return true;
+        if (session != null && (AuthenticationInterceptor.isRootProfile(session.getAttribute("perfil"))
+            || Boolean.TRUE.equals(session.getAttribute("podeGerenciarProdutos")))) return true;
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return false;
     }

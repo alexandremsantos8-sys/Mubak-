@@ -12,7 +12,7 @@
 <main class="page-shell">
     <nav class="site-nav" aria-label="Navegação principal">
         <a class="brand" th:href="@{/}">MUBAK.</a>
-        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a></div>
+        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a><a th:if="${admin}" th:href="@{/admin}">Administração</a></div>
         <a class="nav-action" th:if="${!admin}" th:href="@{/login}">Entrar</a>
         <form th:if="${admin}" th:action="@{/logout}" method="post"><button class="nav-action" type="submit">Sair</button></form>
         <a class="cart-link" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">

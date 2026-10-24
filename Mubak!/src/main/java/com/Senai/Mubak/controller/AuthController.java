@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     private final UsuarioService usuarioService;
+    private final com.Senai.Mubak.service.PerfilService perfilService;
 
-    public AuthController(UsuarioService usuarioService) {
+    public AuthController(UsuarioService usuarioService, com.Senai.Mubak.service.PerfilService perfilService) {
         this.usuarioService = usuarioService;
+        this.perfilService = perfilService;
     }
 
     @GetMapping("/cadastro")
@@ -64,6 +66,8 @@ public class AuthController {
             Usuario usuario = usuarioService.login(identificador, senha);
             session.setAttribute("usuarioId", usuario.getId());
             session.setAttribute("perfil", usuario.getPerfil());
+            var perfil = perfilService.buscarPorNome(usuario.getPerfil());
+            session.setAttribute("podeGerenciarProdutos", perfil != null && perfil.isGerenciamentoProduto());
             return "redirect:/produtos";
         } catch (RuntimeException exception) {
             return "redirect:/login?erro=Login+inválido";

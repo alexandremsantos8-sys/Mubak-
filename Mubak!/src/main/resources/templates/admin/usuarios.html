@@ -1,2 +1,9 @@
-<!-- Listagem exclusiva do perfil ROOT; cada usuário vem do atributo usuarios do Model. -->
-<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Usuários | Mubak</title></head><body><main class="page-shell"><div class="content-wrap"><h1>Usuários.</h1><a class="button button-primary" th:href="@{/admin/usuarios/novo}">Novo usuário</a><div th:each="u:${usuarios}"><h2 th:text="${u.nome}"></h2><p th:text="${u.email}"></p></div></div></main></body></html>
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Usuários | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}"><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body><main class="page-shell admin-shell"><nav class="site-nav admin-nav"><a class="brand" th:href="@{/}">MUBAK.</a><div class="nav-links"><a th:href="@{/admin/perfis}">Perfis</a><a th:href="@{/admin/usuarios}">Usuários</a></div><a class="nav-action" th:href="@{/produtos}">Voltar à loja</a></nav>
+<div class="content-wrap"><header class="page-header"><div><p class="eyebrow">MUBAK / ADMINISTRAÇÃO</p><h1>Usuários.</h1><p class="intro">Ajuste os dados e o nível de acesso de cada conta.</p></div></header>
+<div class="admin-tabs"><a th:href="@{/admin/perfis}">Perfis</a><a class="is-current" th:href="@{/admin/usuarios}">Usuários</a></div>
+<div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div><div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+<table class="admin-table"><thead><tr><th>Nome</th><th>E-mail</th><th>CPF / CNPJ</th><th>Perfil</th><th></th></tr></thead><tbody><tr th:each="u : ${usuarios}"><td th:text="${u.nome}"></td><td th:text="${u.email}"></td><td th:text="${u.documento}"></td><td th:text="${u.perfil}"></td><td><a class="button button-secondary" th:href="@{/admin/usuarios/{id}/editar(id=${u.id})}">Editar</a></td></tr></tbody></table>
+</div></main></body></html>
