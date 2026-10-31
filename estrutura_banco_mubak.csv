@@ -1,0 +1,37 @@
+grupo;tabela_ou_arquivo;campo_ou_caminho;tipo_ou_mime;obrigatorio;chave_ou_regra;origem_no_codigo;observacao
+DADOS;usuarios;id;BIGINT IDENTITY;Sim;PK;Usuario.id;Gerado pelo banco.
+DADOS;usuarios;nome;VARCHAR(150);Sim;-;Usuario.nome / UsuarioForm.nome;Nome ou razao social.
+DADOS;usuarios;documento;VARCHAR(14);Sim;"UNIQUE; 11 ou 14 digitos";Usuario.documento;CPF/CNPJ normalizado pelo trigger.
+DADOS;usuarios;data_nascimento;DATE;Sim;-;Usuario.dataNascimento;Data do titular.
+DADOS;usuarios;email;VARCHAR(254);Sim;UNIQUE;Usuario.email;Normalizado para minusculas e sem espacos.
+DADOS;usuarios;senha_hash;VARCHAR(255);Sim;-;Usuario.senhaHash / SenhaService;"Hash SHA-256 hexadecimal; nunca senha em texto."
+DADOS;usuarios;perfil;VARCHAR(20);Sim;CLIENTE ou ROOT;Usuario.perfil;Define autorizacao administrativa.
+DADOS;usuarios;criado_em;TIMESTAMPTZ;Sim;DEFAULT now();schema.sql;Controle de criacao.
+DADOS;usuarios;atualizado_em;TIMESTAMPTZ;Sim;DEFAULT/trigger;schema.sql;Atualizado pelo trigger.
+DADOS;produtos;id;BIGINT IDENTITY;Sim;PK;produto.id;Gerado pelo banco.
+DADOS;produtos;nome;VARCHAR(120);Sim;-;produto.nome;Nome exibido no catalogo.
+DADOS;produtos;descricao;VARCHAR(2000);Sim;-;produto.descricao;Descricao do produto.
+DADOS;produtos;preco;NUMERIC(12,2);Sim;> 0;produto.preco;Preco em reais.
+DADOS;produtos;estoque;INTEGER;Sim;>= 0;produto.estoque;Quantidade disponivel.
+DADOS;produtos;imagem_url;VARCHAR(500);Sim;-;produto.imagemUrl / ImagemService;Caminho/URL usado pela aplicacao atual.
+DADOS;produtos;categoria;VARCHAR(80);Sim;-;produto.categoria;Tambem usado na busca.
+DADOS;produtos;vendedor;VARCHAR(120);Sim;-;produto.vendedor;"Texto livre; atualmente nao referencia usuarios.id."
+DADOS;imagens;id;UUID;Sim;PK;Estrutura de migracao proposta;Metadado do arquivo no Storage.
+DADOS;imagens;produto_id;BIGINT;Sim;FK produtos.id;Estrutura de migracao proposta;Exclusao em cascata.
+DADOS;imagens;url;VARCHAR(1000);Sim;-;produto.imagemUrl / estrutura proposta;URL publica ou assinada.
+DADOS;imagens;storage_bucket;VARCHAR(100);Sim;DEFAULT produtos;Estrutura de migracao proposta;Bucket do Supabase Storage.
+DADOS;imagens;storage_path;VARCHAR(500);Nao;-;Estrutura de migracao proposta;Caminho do objeto no bucket.
+DADOS;imagens;nome_original;VARCHAR(255);Nao;-;MultipartFile.originalFilename;Nome enviado pelo usuario, se necessario.
+DADOS;imagens;tipo_mime;VARCHAR(100);Sim;JPG/PNG/WEBP/GIF;ImagemService;Tipos aceitos pela aplicacao.
+DADOS;imagens;tamanho_bytes;BIGINT;Nao;>= 0;MultipartFile.size;Tamanho do arquivo.
+DADOS;imagens;principal;BOOLEAN;Sim;Uma principal por produto;Estrutura de migracao proposta;Indice unico parcial.
+DADOS;imagens;criado_em;TIMESTAMPTZ;Sim;DEFAULT now();Estrutura de migracao proposta;Data do registro do metadado.
+RELACIONAMENTO;imagens.produto_id;produtos.id;N:1;Nao;FK proposta;Estrutura de migracao proposta;Tabela imagens preparada para migracao.
+RELACIONAMENTO;produtos.vendedor;usuarios.id;N:1;Nao;Sem FK;produto.vendedor;O sistema grava vendedor como texto livre.
+OBSERVACAO;sessao;usuarioId e perfil;HttpSession;Nao;Fora do banco;AuthController;A sessao nao persiste no PostgreSQL.
+OBSERVACAO;senha;senha original;Nao armazenada;Nao;-;SenhaService;Somente hash SHA-256 hexadecimal e salvo.
+IMAGEM ENCONTRADA;uploads;uploads/1438fead-83eb-4e82-aa8b-c40499d303bb.jpg;image/jpeg;-;Sem produto associado;ImagemService / filesystem;"30711 bytes; arquivo local encontrado; sem mapeamento persistido verificavel."
+IMAGEM ENCONTRADA;uploads;uploads/5e9795e8-c008-4ed3-8490-029b110a9e4d.webp;image/webp;-;Sem produto associado;ImagemService / filesystem;"24914 bytes; arquivo local encontrado; sem mapeamento persistido verificavel."
+IMAGEM ENCONTRADA;uploads;uploads/8fe9e2d9-8ea3-4435-8607-2854b54c1cec.webp;image/webp;-;Sem produto associado;ImagemService / filesystem;"55432 bytes; arquivo local encontrado; sem mapeamento persistido verificavel."
+IMAGEM ENCONTRADA;uploads;uploads/9be4483c-8087-416e-8a63-da6111c405d8.jpg;image/jpeg;-;Sem produto associado;ImagemService / filesystem;"4979 bytes; arquivo local encontrado; sem mapeamento persistido verificavel."
+IMAGEM ENCONTRADA;uploads;uploads/d2d34b06-dfdd-4571-a49c-4a84fffd6303.webp;image/webp;-;Sem produto associado;ImagemService / filesystem;"124084 bytes; arquivo local encontrado; sem mapeamento persistido verificavel."
