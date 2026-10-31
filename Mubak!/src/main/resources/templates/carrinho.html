@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carrinho | Mubak</title>
+    <link rel="stylesheet" th:href="@{/css/produtos.css(v=5)}">
+    <script th:src="@{/js/navigation.js(v=3)}" defer></script>
+</head>
+<body>
+<main class="page-shell">
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a class="brand" th:href="@{/}">MUBAK.</a>
+        <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a><a th:if="${admin}" th:href="@{/admin}">Administração</a></div>
+        <a class="nav-action" th:href="@{/login}">Entrar</a>
+        <a class="cart-link is-current" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+            <span class="cart-badge" th:if="${cartCount > 0}" th:text="${cartCount}"></span>
+        </a>
+    </nav>
+
+    <div class="content-wrap cart-page">
+        <header class="page-header cart-heading">
+            <div><p class="eyebrow">MUBAK / SUA SELEÇÃO</p><h1>Seu carrinho.</h1></div>
+            <a class="text-link" th:href="@{/produtos}">Continuar comprando <span aria-hidden="true">&#8594;</span></a>
+        </header>
+        <div class="alert alert-success" th:if="${carrinhoMensagem}" th:text="${carrinhoMensagem}" role="status"></div>
+        <div class="alert alert-error" th:if="${erroCarrinho}" th:text="${erroCarrinho}" role="alert"></div>
+
+        <div class="cart-layout" th:if="${!#lists.isEmpty(linhas)}">
+            <section class="cart-lines" aria-label="Produtos no carrinho">
+                <article class="cart-line" th:each="linha : ${linhas}">
+                    <a class="cart-line-image" th:href="@{/produtos/{id}(id=${linha.product.id})}">
+                        <img th:src="${linha.product.imagemUrl}" th:alt="${linha.product.nome}" onerror="this.onerror=null;this.src='/images/produto-placeholder.svg';">
+                    </a>
+                    <div class="cart-line-main">
+                        <p class="product-category" th:text="${linha.product.categoria}"></p>
+                        <h2><a th:href="@{/produtos/{id}(id=${linha.product.id})}" th:text="${linha.product.nome}"></a></h2>
+                        <p class="cart-line-unit-price" th:text="${'R$ ' + #numbers.formatDecimal(linha.product.preco, 1, 2) + ' cada'}"></p>
+                        <div class="cart-line-actions">
+                            <form class="quantity-control" th:action="@{/carrinho/quantidade/{id}(id=${linha.product.id})}" method="post">
+                                <button type="submit" name="quantidade" th:value="${linha.quantity - 1}" aria-label="Diminuir quantidade" th:disabled="${linha.quantity <= 1}">−</button>
+                                <output th:text="${linha.quantity}" th:aria-label="${'Quantidade: ' + linha.quantity}"></output>
+                                <button type="submit" name="quantidade" th:value="${linha.quantity + 1}" aria-label="Aumentar quantidade" th:disabled="${linha.quantity >= linha.product.estoque}">+</button>
+                            </form>
+                            <form th:action="@{/carrinho/remover/{id}(id=${linha.product.id})}" method="post">
+                                <button class="cart-remove" type="submit" aria-label="Remover produto do carrinho">Remover</button>
+                            </form>
+                        </div>
+                    </div>
+                    <strong class="cart-line-total" th:text="${'R$ ' + #numbers.formatDecimal(linha.total, 1, 2)}"></strong>
+                </article>
+                <form class="cart-clear-form" th:action="@{/carrinho/esvaziar}" method="post">
+                    <button class="text-link" type="submit">Esvaziar carrinho</button>
+                </form>
+            </section>
+
+            <aside class="cart-summary" aria-labelledby="summary-title">
+                <h2 id="summary-title">Resumo do pedido</h2>
+                <div class="cart-summary-row"><span>Produtos (<span th:text="${quantidadeTotal}"></span>)</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
+                <div class="cart-summary-row"><span>Frete</span><span>A calcular</span></div>
+                <div class="cart-summary-total"><span>Subtotal</span><strong th:text="${'R$ ' + #numbers.formatDecimal(subtotal, 1, 2)}"></strong></div>
+                <p class="cart-checkout-note">Escolha a forma de pagamento e finalize seu pedido com segurança.</p>
+                <button class="button button-primary cart-buy" type="button" data-open-payment>Comprar</button>
+                <button class="button button-secondary cart-continue" type="button" data-open-policy>Política de trocas</button>
+            </aside>
+        </div>
+
+        <section class="cart-empty" th:if="${#lists.isEmpty(linhas)}">
+            <div class="cart-empty-icon" aria-hidden="true">&#128722;</div>
+            <h2>Seu carrinho está vazio.</h2>
+            <p>Explore a loja e encontre algo para você.</p>
+            <a class="button button-primary" th:href="@{/produtos}">Explorar produtos</a>
+        </section>
+    </div>
+</main>
+
+<div class="modal" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel payment-panel">
+        <div class="modal-header">
+            <div><p class="eyebrow">MUBAK / PAGAMENTO</p><h2 id="payment-modal-title">Como você quer pagar?</h2></div>
+            <button class="modal-close" type="button" aria-label="Fechar pagamento" data-close-modal>&times;</button>
+        </div>
+        <div class="payment-options" role="list">
+            <button class="payment-option" type="button" data-payment-option="credit">Cartão de crédito <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="credit" hidden>
+                <div class="field card-number-field"><label for="credit-card-number">Número do cartão</label><div class="card-input-wrap"><input id="credit-card-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23"><span class="card-brand" data-card-brand aria-live="polite"></span></div><span class="field-error" data-error-for="credit-card-number"></span></div>
+                <div class="checkout-fields-grid"><div class="field"><label for="credit-expiry">Data de validade</label><input id="credit-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5"></div><div class="field"><label for="credit-cvv">CVV</label><input id="credit-cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="000" maxlength="4"></div></div>
+                <div class="field"><label for="credit-holder">Nome do titular</label><input id="credit-holder" type="text" autocomplete="cc-name" placeholder="Como aparece no cartão"></div>
+                <div class="field"><label for="credit-installments">Parcelamento</label><select id="credit-installments"><option value="1">1x sem juros</option><option value="2">2x com juros</option><option value="3">3x com juros</option><option value="4">4x com juros</option><option value="5">5x com juros</option><option value="6">6x com juros</option><option value="7">7x com juros</option><option value="8">8x com juros</option><option value="9">9x com juros</option><option value="10">10x com juros</option></select></div>
+                <button class="button button-primary payment-submit" type="button" data-finish-payment>Finalizar compra</button>
+            </div>
+
+            <button class="payment-option" type="button" data-payment-option="debit">Cartão de débito <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="debit" hidden>
+                <div class="field card-number-field"><label for="debit-card-number">Número do cartão</label><div class="card-input-wrap"><input id="debit-card-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23"><span class="card-brand" data-card-brand aria-live="polite"></span></div></div>
+                <div class="checkout-fields-grid"><div class="field"><label for="debit-expiry">Data de validade</label><input id="debit-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5"></div><div class="field"><label for="debit-cvv">CVV</label><input id="debit-cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="000" maxlength="4"></div></div>
+                <div class="field"><label for="debit-holder">Nome do titular</label><input id="debit-holder" type="text" autocomplete="cc-name" placeholder="Como aparece no cartão"></div>
+                <button class="button button-primary payment-submit" type="button" data-finish-payment>Finalizar compra</button>
+            </div>
+
+            <button class="payment-option" type="button" data-payment-option="pix">Pix <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="pix" hidden><div class="field"><label for="pix-document">CPF</label><input id="pix-document" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div><button class="button button-primary qr-button" type="button" data-qr-button disabled>Gerar QR Code</button></div>
+
+            <button class="payment-option" type="button" data-payment-option="boleto">Boleto <span aria-hidden="true">+</span></button>
+            <div class="payment-fields" data-payment-fields="boleto" hidden><div class="field"><label for="boleto-document">CPF ou CNPJ</label><input id="boleto-document" type="text" inputmode="numeric" placeholder="Digite seu CPF ou CNPJ" maxlength="18"></div><button class="button button-primary qr-button" type="button" data-qr-button disabled>Gerar Boleto</button></div>
+        </div>
+        <p class="checkout-status" data-checkout-status role="status" aria-live="polite"></p>
+    </section>
+</div>
+
+<div class="modal" id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policy-modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel policy-panel">
+        <div class="modal-header"><div><p class="eyebrow">MUBAK / CONFIANÇA</p><h2 id="policy-modal-title">Política de trocas</h2></div><button class="modal-close" type="button" aria-label="Fechar política de trocas" data-close-modal>&times;</button></div>
+        <p>A troca segue as leis brasileiras, ou seja, você tem garantia e direito de arrependimento de 1 mês de balcão</p>
+        <button class="button button-primary policy-accept" type="button" data-close-modal>Li e aceito os termos</button>
+    </section>
+</div>
+</body>
+</html>
