@@ -1,23 +1,28 @@
-/* Folha compartilhada por login, cadastro, catálogo, detalhe e formulários administrativos. */
+/* Base compartilhada por login, cadastro, catálogo, carrinho e administração. */
 :root {
     --paper: #f5f5f7;
     --white: #fff;
     --ink: #1d1d1f;
     --muted: #6e6e73;
-    /* --line: #eb0000; */
+    --line: #d2d2d7;
     --accent: #06c;
     --accent-dark: #004f9e;
     --danger: #b42318;
     --success: #18794e;
+    --focus: #80bfff;
+    --whatsapp: #25d366;
+    --font-sans: "Avenir Next", "Helvetica Neue", sans-serif;
 }
 
-* { box-sizing: border-box; }
+/* Reset e elementos base. */
+*, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Avenir Next", "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
 .page-shell { min-height: 100vh; }
+
+/* Navegação e layout principal. */
 .site-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 52px; padding: 0 max(24px, calc((100% - 1180px) / 2)); background: rgba(245,245,247,.88); border-bottom: 1px solid rgba(210,210,215,.7); backdrop-filter: blur(18px); }
-/* Componentes reutilizados: navegação, botões, alertas e campos dos formulários. */
 .brand, .brand-mark { color: var(--ink); font-size: .95rem; font-weight: 700; letter-spacing: .16em; text-decoration: none; }
 .brand-mark span { color: var(--accent); }
 .nav-links { display: flex; align-items: center; gap: 26px; }
@@ -33,7 +38,7 @@ h1 { max-width: 800px; margin: 0; font-size: clamp(3.4rem, 8vw, 7rem); line-heig
 .intro { max-width: 520px; margin: 22px 0 0; color: var(--muted); font-size: 1.08rem; line-height: 1.55; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; border: 1px solid transparent; border-radius: 999px; padding: 10px 18px; cursor: pointer; font: 600 .82rem "Avenir Next", "Helvetica Neue", sans-serif; text-decoration: none; transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease; }
 .button:hover { transform: translateY(-1px); }
-.button:focus-visible, input:focus-visible, textarea:focus-visible, .mobile-menu:focus-visible { outline: 3px solid #80bfff; outline-offset: 3px; }
+.button:focus-visible, input:focus-visible, textarea:focus-visible, .mobile-menu:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .button-primary { color: #fff; background: var(--accent); }
 .button-primary:hover { background: var(--accent-dark); }
 .button-secondary { color: var(--ink); background: transparent; border-color: var(--line); }
@@ -83,7 +88,7 @@ h1 { max-width: 800px; margin: 0; font-size: clamp(3.4rem, 8vw, 7rem); line-heig
 .cart-link:hover, .cart-link.is-current { background: rgba(29,29,31,.07); }
 .cart-link svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 .cart-badge { position: absolute; top: 0; right: -2px; display: grid; min-width: 18px; height: 18px; place-items: center; border: 2px solid var(--paper); border-radius: 99px; padding: 0 4px; color: #fff; background: var(--accent); font-size: .62rem; font-weight: 700; line-height: 1; }
-.cart-link:focus-visible, .quantity-control button:focus-visible, .cart-remove:focus-visible { outline: 3px solid #80bfff; outline-offset: 3px; }
+.cart-link:focus-visible, .quantity-control button:focus-visible, .cart-remove:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .add-to-cart-form { display: grid; justify-items: start; gap: 10px; margin-top: 30px; }
 .add-to-cart-form .button { min-height: 48px; padding: 12px 24px; }
 .add-to-cart-form .button:disabled { opacity: .5; cursor: not-allowed; }
@@ -146,7 +151,6 @@ body.modal-open { overflow: hidden; }
 .cart-empty h2 { margin: 24px 0 8px; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.05em; }
 .cart-empty p { margin: 0 0 24px; color: var(--muted); }
 .product-form { display: grid; gap: 1px; background: var(--line); }
-/* Seções de formulário se reorganizam em uma coluna em telas menores. */
 .form-section { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding: 42px; background: var(--white); }
 .form-section h2 { grid-column: 1 / -1; margin: 0 0 10px; font-size: 1.55rem; letter-spacing: -.04em; }
 .field { display: grid; gap: 9px; }
@@ -154,12 +158,34 @@ body.modal-open { overflow: hidden; }
 label { font-size: .76rem; font-weight: 700; letter-spacing: .04em; }
 input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 0; padding: 14px; color: var(--ink); background: var(--paper); font: 1rem "Avenir Next", "Helvetica Neue", sans-serif; }
 input[type="file"] { padding: 12px; font-size: .85rem; }
-input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #80bfff; outline-offset: 1px; }
+input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid var(--focus); outline-offset: 1px; }
 .field-error { color: var(--danger); font-size: .8rem; }
-.field-help { display: flex ; justify-content: center; align-itenms: center; color: var(--muted); font-size: .78rem; }
+.field-help { display: flex; justify-content: center; align-items: center; color: var(--muted); font-size: .78rem; }
 .form-actions { display: flex; justify-content: end; gap: 12px; padding: 24px 42px; background: var(--white); }
-.password-field{position:relative;display:flex;align-items:center}.password-field input{width:100%;padding-right:44px}.password-toggle{position:absolute;right:8px;background:none;border:none;cursor:pointer;padding:4px;color:#6b7280}.password-toggle svg{width:20px;height:20px;fill:currentColor}.login-secondary-actions{display:flex;justify-content:flex-end;margin-top:4px}.remember-me{display:flex;align-items:center;gap:8px;margin-top:8px}.login-form-actions .button-primary{width:100%;border-radius:999px}.login-footer-text{text-align:center;margin-top:12px;font-size:.9rem;color:#6b7280}.login-back{text-align:center}.muted-link{color:#6b7280}.login-subtitle{color:#6b7280;font-size:.95rem;margin:0 0 8px}
 
+/* Formulário de autenticação. */
+.login-page { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; background: #f3f4f6; }
+.login-card { width: 100%; max-width: 420px; border-radius: 16px; padding: 36px; background: var(--white); box-shadow: 0 10px 25px rgba(0,0,0,.1); }
+.login-card h1 { margin: 0 0 6px; color: #111827; font-size: 1.9rem; font-weight: 600; }
+.login-card .form-section { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.login-card .form-actions { display: flex; margin-top: 20px; }
+.login-card .button { border-radius: 12px; }
+.login-card .field-help { color: #6b7280; font-size: .9rem; }
+.login-form-section label { color: #374151; font-size: .875rem; font-weight: 500; }
+.login-card input { width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; background: var(--white); font-size: 1rem; }
+.login-card input:focus { border-color: #2563eb; outline: 0; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+.password-field { position: relative; display: flex; align-items: center; }
+.password-field input { padding-right: 44px; }
+.password-toggle { position: absolute; right: 8px; border: 0; padding: 4px; color: #6b7280; background: transparent; cursor: pointer; }
+.password-toggle svg { width: 20px; height: 20px; fill: currentColor; }
+.login-secondary-actions { display: flex; justify-content: flex-end; margin-top: 4px; }
+.login-secondary-actions .text-link, .login-footer-text a.text-link { color: #2563eb; }
+.remember-me { display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 8px; }
+.login-form-actions .button-primary { width: 100%; border: 0; border-radius: 9999px; padding: 12px; color: #fff; background: #2563eb; font-weight: 600; }
+.login-footer-text { margin-top: 12px; color: #6b7280; font-size: .9rem; text-align: center; }
+.login-back { text-align: center; }
+.muted-link { color: #9ca3af; }
+.login-subtitle { margin: 0 0 16px; color: #6b7280; font-size: .95rem; }
 
 @media (max-width: 760px) {
     .site-nav { padding: 0 18px; }
@@ -200,6 +226,8 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #8
 }
 
 @keyframes content-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f3f4f6}.login-card{width:100%;max-width:420px;background:#fff;border:none;border-radius:20px;padding:36px;box-shadow:0 10px 30px rgba(0,0,0,.08)}.login-card h1{margin:0 0 6px;font-size:1.9rem;font-weight:700;color:#111}.login-card .field-help{color:#6b7280;font-size:.9rem}.login-card .form-section{display:flex;flex-direction:column;gap:8px;margin-top:16px}.login-card input{border:1px solid #d1d5db;border-radius:12px;padding:12px 14px;font-size:1rem}.login-card input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}.login-card .form-actions{margin-top:20px;display:flex}.login-card .button{border-radius:12px}.login-card .button-primary{background:#2563eb;color:#fff;border:none;padding:12px}.login-card .text-link{color:#2563eb;text-decoration:none}
-.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f3f4f6}.login-card{width:100%;max-width:420px;background:#fff;border:none;border-radius:16px;padding:36px;box-shadow:0 10px 25px rgba(0,0,0,.1)}.login-card h1{margin:0 0 6px;font-size:1.9rem;font-weight:600;color:#111827}.login-subtitle{color:#6b7280;font-size:.95rem;margin:0 0 16px}.login-form-section{display:flex;flex-direction:column;gap:8px}.login-form-section label{font-size:.875rem;color:#374151;font-weight:500}.login-form-section input{width:100%;background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:12px 14px;font-size:1rem}.login-form-section input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}.field-help{color:#9ca3af;font-size:.75rem}.password-field{position:relative;display:flex;align-items:center}.password-field input{width:100%;padding-right:44px}.password-toggle{position:absolute;right:8px;background:none;border:none;cursor:pointer;padding:4px;color:#6b7280}.password-toggle svg{width:20px;height:20px;fill:currentColor}.login-secondary-actions{display:flex;justify-content:flex-end;margin-top:4px}.login-secondary-actions .text-link{color:#2563eb;font-size:.875rem}.remember-me{display:flex;flex-direction:row;align-items:center;gap:8px;margin-top:8px}.login-form-actions .button-primary{width:100%;border-radius:9999px;background:#2563eb;color:#fff;border:none;padding:12px;font-weight:600}.login-footer-text{text-align:center;margin-top:12px;font-size:.9rem;color:#6b7280}.login-back{text-align:center}.login-footer-text a.text-link{color:#2563eb}.muted-link{color:#9ca3af !important}
-.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9999;text-decoration:none;transition:transform .2s}.whatsapp-float:hover{transform:scale(1.08)}.whatsapp-float svg{width:30px;height:30px;fill:currentColor}
+
+/* Ações persistentes. */
+.whatsapp-float { position: fixed; right: 24px; bottom: 24px; z-index: 9999; display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: var(--whatsapp); box-shadow: 0 4px 12px rgba(0,0,0,.25); text-decoration: none; transition: transform .2s; }
+.whatsapp-float:hover { transform: scale(1.08); }
+.whatsapp-float svg { width: 30px; height: 30px; fill: currentColor; }
