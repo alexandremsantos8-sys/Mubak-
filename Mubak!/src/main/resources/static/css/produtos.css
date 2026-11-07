@@ -4,7 +4,7 @@
     --white: #fff;
     --ink: #1d1d1f;
     --muted: #6e6e73;
-    --line: #d2d2d7;
+    /* --line: #0000da; */
     --accent: #06c;
     --accent-dark: #004f9e;
     --danger: #b42318;
@@ -166,11 +166,11 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid va
 /* Formulário de autenticação. */
 .login-page { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; background: #f3f4f6; }
 .login-card { width: 100%; max-width: 420px; border-radius: 16px; padding: 36px; background: var(--white); box-shadow: 0 10px 25px rgba(0,0,0,.1); }
-.login-card h1 { margin: 0 0 6px; color: #111827; font-size: 1.9rem; font-weight: 600; }
+.login-card h1 { margin: 0 0 6px; color: #111827; font-size: 1.9rem; font-weight: 600; display: flex; justify-content: center; align-items: center;}
 .login-card .form-section { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
 .login-card .form-actions { display: flex; margin-top: 20px; }
 .login-card .button { border-radius: 12px; }
-.login-card .field-help { color: #6b7280; font-size: .9rem; }
+.login-card .field-help { color: #6b7280; font-size: .6rem; }
 .login-form-section label { color: #374151; font-size: .875rem; font-weight: 500; }
 .login-card input { width: 100%; border: 1px solid #d1d5db; border-radius: 8px; padding: 12px 14px; background: var(--white); font-size: 1rem; }
 .login-card input:focus { border-color: #2563eb; outline: 0; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
@@ -180,12 +180,12 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid va
 .password-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 .login-secondary-actions { display: flex; justify-content: flex-end; margin-top: 4px; }
 .login-secondary-actions .text-link, .login-footer-text a.text-link { color: #2563eb; }
-.remember-me { display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 8px; }
+.remember-me { gap: 8px; margin-top: 8px; height: 12px; width: 12px ; display: flex; justify-content: center; align-items: center; }
 .login-form-actions .button-primary { width: 100%; border: 0; border-radius: 9999px; padding: 12px; color: #fff; background: #2563eb; font-weight: 600; }
 .login-footer-text { margin-top: 12px; color: #6b7280; font-size: .9rem; text-align: center; }
 .login-back { text-align: center; }
 .muted-link { color: #9ca3af; }
-.login-subtitle { margin: 0 0 16px; color: #6b7280; font-size: .95rem; }
+.login-subtitle { margin: 0 0 16px; color: #6b7280; font-size: .9rem; display: flex; justify-content: center; align-items: center; }
 
 @media (max-width: 760px) {
     .site-nav { padding: 0 18px; }
