@@ -158,7 +158,7 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #8
 .field-error { color: var(--danger); font-size: .8rem; }
 .field-help { color: var(--muted); font-size: .78rem; }
 .form-actions { display: flex; justify-content: end; gap: 12px; padding: 24px 42px; background: var(--white); }
-.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9999;text-decoration:none;transition:transform .2s}.whatsapp-float:hover{transform:scale(1.08)}.whatsapp-float svg{width:30px;height:30px;fill:currentColor}
+.password-field{position:relative;display:flex;align-items:center}.password-field input{width:100%;padding-right:44px}.password-toggle{position:absolute;right:8px;background:none;border:none;cursor:pointer;padding:4px;color:#6b7280}.password-toggle svg{width:20px;height:20px;fill:currentColor}.login-secondary-actions{display:flex;justify-content:flex-end;margin-top:4px}.remember-me{display:flex;align-items:center;gap:8px;margin-top:8px}.login-form-actions .button-primary{width:100%;border-radius:999px}.login-footer-text{text-align:center;margin-top:12px;font-size:.9rem;color:#6b7280}.login-back{text-align:center}.muted-link{color:#6b7280}.login-subtitle{color:#6b7280;font-size:.95rem;margin:0 0 8px}
 
 
 @media (max-width: 760px) {
