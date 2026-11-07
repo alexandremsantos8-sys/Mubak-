@@ -31,7 +31,8 @@ public class ImagemService {
         try {
             Files.createDirectories(pastaUpload);
             Files.copy(arquivo.getInputStream(), pastaUpload.resolve(nomeArquivo));
-            return "/uploads/" + nomeArquivo;
+            // return "/uploads/" + nomeArquivo;
+            return "https://gyervoskufejkatveqbt.storage.supabase.co/storage/v1/object/public/imagens/" + nomeArquivo;
         } catch (IOException exception) {
             throw new IllegalArgumentException("Não foi possível salvar a imagem.", exception);
         }

@@ -4,26 +4,30 @@
     <div class="login-card">
         <div class="alert alert-error" th:if="${erro}" th:text="${erro}" role="alert" aria-live="assertive"></div>
         <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}" role="status" aria-live="polite"></div>
-        <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title" novalidate>
+        <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title">
             <h1 id="login-title">Entrar.</h1>
-            <p class="field-help">Acesse sua conta para continuar.</p>
-            <section class="form-section">
+            <p class="login-subtitle">Acesse sua conta para continuar.</p>
+            <section class="form-section login-form-section">
                 <label for="identificador">CPF/CNPJ ou e-mail</label>
-                <input id="identificador" name="identificador" autocomplete="username" required aria-describedby="identificador-ajuda">
-                <small id="identificador-ajuda" class="field-help">Informe CPF, CNPJ ou e-mail.</small>
+                <input id="identificador" name="identificador" autocomplete="username" required>
+                <small class="field-help">Informe CPF, CNPJ ou e-mail.</small>
                 <label for="senha">Senha</label>
-                <div style="display:flex;gap:8px;align-items:center">
-                    <input id="senha" type="password" name="senha" autocomplete="current-password" required style="flex:1">
-                    <button type="button" id="toggle-senha" class="button button-secondary" aria-label="Mostrar senha">Mostrar</button>
+                <div class="password-field">
+                    <input id="senha" type="password" name="senha" autocomplete="current-password" required>
+                    <button type="button" id="toggle-senha" class="password-toggle" aria-label="Mostrar senha">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                    </button>
                 </div>
-                <a class="text-link" th:href="@{/login}" style="margin-top:4px">Esqueceu a senha?</a>
-                <label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="checkbox" name="lembrar"> Lembrar de mim</label>
+                <div class="login-secondary-actions">
+                    <a class="text-link" th:href="@{/login}">Esqueceu a senha?</a>
+                </div>
+                <label class="remember-me"><input type="checkbox" name="lembrar"> Lembrar de mim</label>
             </section>
-            <div class="form-actions">
-                <button class="button button-primary" type="submit" style="width:100%">Entrar</button>
+            <div class="form-actions login-form-actions">
+                <button class="button button-primary" type="submit">Entrar</button>
             </div>
-            <p class="field-help" style="text-align:center;margin-top:12px">Ainda não tem conta? <a th:href="@{/cadastro}">Criar conta</a></p>
-            <p class="field-help" style="text-align:center"><a th:href="@{/}">Voltar para a página inicial</a></p>
+            <p class="login-footer-text">Ainda não tem conta? <a th:href="@{/cadastro}" class="text-link">Criar conta</a></p>
+            <p class="login-footer-text login-back"><a th:href="@{/}" class="text-link muted-link">[ Voltar para a página inicial ]</a></p>
         </form>
     </div>
 </main>
@@ -37,7 +41,7 @@
     if(/\d/.test(input.value)) input.value=v;
   });
   document.getElementById('toggle-senha').addEventListener('click',function(){
-    const i=document.getElementById('senha'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'Mostrar':'Ocultar';
+    const i=document.getElementById('senha'); i.type=i.type==='password'?'text':'password'; this.setAttribute('aria-label',i.type==='password'?'Mostrar senha':'Ocultar senha');
   });
 })();
 </script>
