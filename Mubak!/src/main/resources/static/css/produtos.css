@@ -23,7 +23,7 @@ a { color: inherit; }
 
 /* Navegação e layout principal. */
 .site-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 52px; padding: 0 max(24px, calc((100% - 1180px) / 2)); background: rgba(245,245,247,.88); border-bottom: 1px solid rgba(210,210,215,.7); backdrop-filter: blur(18px); }
-.brand, .brand-mark { color: var(--ink); font-size: .95rem; font-weight: 700; letter-spacing: .16em; text-decoration: none; }
+.brand, .brand-mark { color: var(--ink); font-size: 2rem; font-weight: 700; letter-spacing: .16em; text-decoration: none; border-spacing: 12px }
 .brand-mark span { color: var(--accent); }
 .nav-links { display: flex; align-items: center; gap: 26px; }
 .nav-links a, .nav-action { color: var(--muted); font-size: .78rem; text-decoration: none; transition: color 160ms ease; }
@@ -186,6 +186,9 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid va
 .login-back { text-align: center; }
 .muted-link { color: #9ca3af; }
 .login-subtitle { margin: 0 0 16px; color: #6b7280; font-size: .9rem; display: flex; justify-content: center; align-items: center; }
+.flex {display: flex}
+.column {flex-direction: column}
+.center {justify-content: center; align-items: center; }
 
 @media (max-width: 760px) {
     .site-nav { padding: 0 18px; }

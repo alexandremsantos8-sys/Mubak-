@@ -1,33 +1,37 @@
 <!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8">
     <title>Login | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}">
 </head><body><main class="page-shell login-page">
-    <div class="login-card">
-        <div class="alert alert-error" th:if="${erro}" th:text="${erro}" role="alert" aria-live="assertive"></div>
-        <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}" role="status" aria-live="polite"></div>
-        <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title">
-            <h1 id="login-title">Entrar.</h1>
-            <p class="login-subtitle">Acesse sua conta para continuar.</p>
-            <section class="form-section login-form-section">
-                <label for="identificador">CPF/CNPJ ou e-mail</label>
-                <input id="identificador" name="identificador" autocomplete="username" required>
-                <label for="senha">Senha</label>
-                <div class="password-field">
-                    <input id="senha" type="password" name="senha" autocomplete="current-password" required>
-                    <button type="button" id="toggle-senha" class="password-toggle" aria-label="Mostrar senha">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
-                    </button>
+    <div class="flex column center">
+        <div> <a class="brand" th:href="@{/}">MUBAK.</a></div>
+        <div class="login-card">
+            <div class="alert alert-error" th:if="${erro}" th:text="${erro}" role="alert" aria-live="assertive"></div>
+            <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}" role="status" aria-live="polite"></div>
+            <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title">
+                
+                <h1 id="login-title">Entrar.</h1>
+                <p class="login-subtitle">Acesse sua conta para continuar.</p>
+                <section class="form-section login-form-section">
+                    <label for="identificador">CPF/CNPJ ou e-mail</label>
+                    <input id="identificador" name="identificador" autocomplete="username" required>
+                    <label for="senha">Senha</label>
+                    <div class="password-field">
+                        <input id="senha" type="password" name="senha" autocomplete="current-password" required>
+                        <button type="button" id="toggle-senha" class="password-toggle" aria-label="Mostrar senha">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="login-secondary-actions">
+                        <a class="text-link" th:href="@{/login}">Esqueceu a senha?</a>
+                    </div>
+                    <label class="remember-me"><input type="checkbox" name="lembrar"> Lembrar de mim</label>
+                </section>
+                <div class="form-actions login-form-actions">
+                    <button class="button button-primary" type="submit">Entrar</button>
                 </div>
-                <div class="login-secondary-actions">
-                    <a class="text-link" th:href="@{/login}">Esqueceu a senha?</a>
-                </div>
-                <label class="remember-me"><input type="checkbox" name="lembrar"> Lembrar de mim</label>
-            </section>
-            <div class="form-actions login-form-actions">
-                <button class="button button-primary" type="submit">Entrar</button>
-            </div>
-            <p class="login-footer-text">Ainda não tem conta? <a th:href="@{/cadastro}" class="text-link">Criar conta</a></p>
-            <p class="login-footer-text login-back"><a th:href="@{/}" class="text-link muted-link">[ Voltar para a página inicial ]</a></p>
-        </form>
+                <p class="login-footer-text">Ainda não tem conta? <a th:href="@{/cadastro}" class="text-link">Criar conta</a></p>
+                <p class="login-footer-text login-back"><a th:href="@{/}" class="text-link muted-link">[ Voltar para a página inicial ]</a></p>
+            </form>
+        </div>
     </div>
 </main>
 <script>
