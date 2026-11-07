@@ -1,7 +1,7 @@
 <!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8">
     <title>Login | Mubak</title><link rel="stylesheet" th:href="@{/css/produtos.css}">
-</head><body><main class="page-shell">
-    <div class="content-wrap">
+</head><body><main class="page-shell login-page">
+    <div class="login-card">
         <div class="alert alert-error" th:if="${erro}" th:text="${erro}" role="alert" aria-live="assertive"></div>
         <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}" role="status" aria-live="polite"></div>
         <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title">
