@@ -13,8 +13,8 @@
     <nav class="site-nav" aria-label="Navegação principal">
         <a class="brand" th:href="@{/}">MUBAK.</a>
         <div class="nav-links"><a th:href="@{/}">Início</a><a th:href="@{/produtos}">Produtos</a><a th:if="${admin}" th:href="@{/admin}">Administração</a></div>
-        <a class="nav-action" th:if="${!admin}" th:href="@{/login}">Entrar</a>
-        <form th:if="${admin}" th:action="@{/logout}" method="post"><button class="nav-action" type="submit">Sair</button></form>
+        <a class="nav-action" th:if="${!logado}" th:href="@{/login}">Entrar</a>
+        <form th:if="${logado}" th:action="@{/logout}" method="post"><button class="nav-action" type="submit">Sair</button></form>
         <a class="cart-link" th:href="@{/carrinho}" th:aria-label="${'Abrir carrinho, ' + cartCount + ' itens'}">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6M10 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
             <span class="cart-badge" th:if="${cartCount > 0}" th:text="${cartCount}"></span>

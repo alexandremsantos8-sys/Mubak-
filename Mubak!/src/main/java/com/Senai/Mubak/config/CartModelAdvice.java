@@ -24,4 +24,10 @@ public class CartModelAdvice {
         var session = request.getSession(false);
         return session != null && AuthenticationInterceptor.isRootProfile(session.getAttribute("perfil"));
     }
+
+    @ModelAttribute("logado")
+    public boolean logado(HttpServletRequest request) {
+        var session = request.getSession(false);
+        return session != null && session.getAttribute("usuarioId") != null;
+    }
 }
