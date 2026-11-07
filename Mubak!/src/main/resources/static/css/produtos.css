@@ -198,3 +198,4 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #8
 }
 
 @keyframes content-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9999;text-decoration:none;transition:transform .2s}.whatsapp-float:hover{transform:scale(1.08)}.whatsapp-float svg{width:30px;height:30px;fill:currentColor}
