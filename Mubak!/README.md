@@ -68,8 +68,7 @@ Quando a credencial falha, o controller redireciona para `/login?erro=Login+inva
 ### Cadastro e edicao de produto
 
 - Tela: [form.html](src/main/resources/templates/produtos/form.html) e um formulario compartilhado por novo e editar.
-- Imagem: [ImagemService.java](src/main/java/com/Senai/Mubak/service/ImagemService.java) aceita JPG, PNG, WEBP e GIF, cria um nome UUID e salva em `uploads/`.
-- Arquivos publicados: [WebConfig.java](src/main/java/com/Senai/Mubak/config/WebConfig.java) transforma `/uploads/**` em recursos acessiveis pelo navegador.
+- Imagem: [ImagemService.java](src/main/java/com/Senai/Mubak/service/ImagemService.java) aceita JPG, PNG, WEBP e GIF, cria um nome UUID e envia para o bucket público `imagens` do Supabase Storage.
 - Detalhes: [detalhes.html](src/main/resources/templates/produtos/detalhes.html) apresenta um produto sem permitir edicao.
 
 ### Administracao de usuarios
@@ -87,6 +86,7 @@ Quando a credencial falha, o controller redireciona para `/login?erro=Login+inva
 ## Banco e configuracao
 
 - [application.properties](src/main/resources/application.properties): nome da aplicacao, conexao PostgreSQL, Hibernate, Thymeleaf e separador do SQL. As credenciais existentes foram mantidas como estavam.
+- Para o Storage, configure `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` no ambiente de execução. A chave `service_role` nunca deve ser exposta no navegador.
 - [schema.sql](src/main/resources/schema.sql): cria a tabela `usuarios` e o trigger que normaliza e-mail/documento e atualiza `atualizado_em`.
 - [SUPABASE.md](SUPABASE.md): orienta a configuracao por variaveis de ambiente. Nao coloque senhas em arquivos versionados.
 - [pom.xml](pom.xml): define Java 17, Spring Boot, JPA, Thymeleaf, validacao, web, PostgreSQL e dependencias de teste.

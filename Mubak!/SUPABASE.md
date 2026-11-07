@@ -2,6 +2,15 @@
 
 O projeto usa PostgreSQL do Supabase. Para trocar para outro projeto/banco, altere apenas as variáveis de ambiente abaixo. Elas não devem ser commitadas.
 
+O upload das imagens usa o bucket público `imagens`. No Railway, configure também:
+
+```powershell
+SUPABASE_URL=https://gyervoskufejkatveqbt.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=SUA_CHAVE_SERVICE_ROLE
+```
+
+O bucket deve existir com esse nome. A chave `service_role` é secreta e deve ficar somente nas variáveis do servidor.
+
 No painel do Supabase, abra **Connect** e copie a conexão PostgreSQL. Prefira a conexão via pooler para a aplicação:
 
 ```powershell
