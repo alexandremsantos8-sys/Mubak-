@@ -4,7 +4,7 @@
     --white: #fff;
     --ink: #1d1d1f;
     --muted: #6e6e73;
-    --line: #d2d2d7;
+    /* --line: #eb0000; */
     --accent: #06c;
     --accent-dark: #004f9e;
     --danger: #b42318;
@@ -46,7 +46,7 @@ h1 { max-width: 800px; margin: 0; font-size: clamp(3.4rem, 8vw, 7rem); line-heig
 .alert { margin: 0 0 28px; padding: 15px 18px; border-left: 3px solid; background: var(--white); font-size: .9rem; }
 .alert-success { color: var(--success); border-color: var(--success); }
 .alert-error { color: var(--danger); border-color: var(--danger); }
-.search-bar { display: flex; gap: 12px; margin-bottom: 48px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+
 .search-bar input { flex: 1; min-width: 0; border: 0; border-radius: 0; padding: 12px 0; color: var(--ink); background: transparent; font: 1.05rem "Avenir Next", "Helvetica Neue", sans-serif; }
 .search-bar input:focus { outline: 0; }
 .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 52px 22px; }
@@ -156,7 +156,7 @@ input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 0; 
 input[type="file"] { padding: 12px; font-size: .85rem; }
 input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #80bfff; outline-offset: 1px; }
 .field-error { color: var(--danger); font-size: .8rem; }
-.field-help { color: var(--muted); font-size: .78rem; }
+.field-help { display: flex ; justify-content: center; align-itenms: center; color: var(--muted); font-size: .78rem; }
 .form-actions { display: flex; justify-content: end; gap: 12px; padding: 24px 42px; background: var(--white); }
 .whatsapp-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9999;text-decoration:none;transition:transform .2s}.whatsapp-float:hover{transform:scale(1.08)}.whatsapp-float svg{width:30px;height:30px;fill:currentColor}
 
@@ -200,4 +200,4 @@ input:focus, textarea:focus { border-color: var(--accent); outline: 2px solid #8
 }
 
 @keyframes content-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f3f4f6}.login-card{width:100%;max-width:420px;background:#fff;border:none;border-radius:20px;padding:36px;box-shadow:0 10px 30px rgba(0,0,0,.08)}.login-card h1{margin:0 0 6px;font-size:1.9rem;font-weight:700;color:#111}.login-card .field-help{color:#6b7280;font-size:.9rem}.login-card .form-section{display:flex;flex-direction:column;gap:8px;margin-top:16px}.login-card input{border:1px solid #d1d5db;border-radius:12px;padding:12px 14px;font-size:1rem}.login-card input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}.login-card .form-actions{margin-top:20px;display:flex}.login-card .button{border-radius:12px}.login-card .button-primary{background:#2563eb;color:#fff;border:none;padding:12px}.login-card .text-link{color:#2563eb;text-decoration:none}
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f3f4f6}.login-card{width:100%;max-width:420px;background:#fff;border:none;border-radius:20px;padding:36px;box-shadow:0 10px 30px rgba(0,0,0,.08)}.login-card h1{  display: flex; justify-content: center; align-items: center; margin:0 0 6px;font-size:1.9rem;font-weight:700;color:#111}.login-card .field-help{color:#6b7280;font-size:.9rem}.login-card .form-section{display:flex;flex-direction:column;gap:8px;margin-top:16px}.login-card input{border:1px solid #d1d5db;border-radius:12px;padding:12px 14px;font-size:1rem}.login-card input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}.login-card .form-actions{margin-top:20px;display:flex}.login-card .button{border-radius:12px}.login-card .button-primary{background:#2563eb;color:#fff;border:none;padding:12px}.login-card .text-link{color:#2563eb;text-decoration:none}
