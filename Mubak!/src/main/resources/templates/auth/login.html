@@ -6,6 +6,7 @@
         <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}" role="status" aria-live="polite"></div>
         <form class="product-form" th:action="@{/login}" method="post" aria-labelledby="login-title">
             <h1 id="login-title">Entrar.</h1>
+            <p class="field-help">Acesse sua conta para continuar.</p>
             <section class="form-section">
                 <label for="identificador">CPF/CNPJ ou e-mail</label>
                 <input id="identificador" name="identificador" autocomplete="username" required>
@@ -16,6 +17,7 @@
                 <button class="button button-primary" type="submit">Entrar</button>
                 <a class="button button-secondary" th:href="@{/cadastro}">Criar conta</a>
             </div>
+            <p class="field-help"><a th:href="@{/}">Voltar para a página inicial</a></p>
         </form>
     </div>
 </main>
